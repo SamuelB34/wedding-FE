@@ -1,3 +1,3 @@
-export function Tables() {
-  return <></>;
+export default function Tables() {
+  return <>Tables Page</>;
 }
