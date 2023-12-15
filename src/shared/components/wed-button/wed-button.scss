@@ -1,5 +1,5 @@
-@import 'src/shared/scss/_variables';
-@import '@/shared/scss/_media-queries.scss';
+@import "src/shared/scss/_variables";
+@import "@/shared/scss/_media-queries.scss";
 
 .x-button-container {
   width: 46px;
@@ -26,7 +26,7 @@
   background: var(--primary-500);
   border: 1px solid var(--primary-500);
   color: #fff;
-  font-family: 'Open Sans', serif;
+  font-family: "Open Sans", serif;
   font-style: normal;
   font-weight: 700;
   line-height: 22px;
@@ -50,8 +50,8 @@
     border: 1px solid #cccccc;
 
     img {
-      filter: brightness(0) saturate(100%) invert(40%) sepia(0%) saturate(1325%) hue-rotate(195deg)
-      brightness(96%) contrast(88%);
+      filter: brightness(0) saturate(100%) invert(40%) sepia(0%) saturate(1325%)
+        hue-rotate(195deg) brightness(96%) contrast(88%);
     }
   }
 
@@ -64,7 +64,7 @@
   background: $--primary;
   border: 1px solid $--primary;
   color: #fff;
-  font-family: 'Open Sans', serif;
+  font-family: "Open Sans", serif;
   font-style: normal;
   font-weight: 600;
   line-height: 22px;
@@ -86,8 +86,8 @@
     border: 1px solid #cccccc;
 
     img {
-      filter: brightness(0) saturate(100%) invert(40%) sepia(0%) saturate(1325%) hue-rotate(195deg)
-      brightness(96%) contrast(88%);
+      filter: brightness(0) saturate(100%) invert(40%) sepia(0%) saturate(1325%)
+        hue-rotate(195deg) brightness(96%) contrast(88%);
     }
   }
 
@@ -96,16 +96,16 @@
 
 .outlined {
   cursor: pointer;
-  border: 1px solid var(--primary-500);
+  border: 1px solid $--primary;
   border-radius: 8px;
-  font-family: 'Open Sans', serif;
+  font-family: Inter, sans-serif;
   font-style: normal;
   font-weight: 700;
   line-height: 22px;
   color: var(--primary-500);
   background-color: var(--white);
   padding: 0 12px;
-  font-size: 16px;
+  font-size: 12px;
 
   // img {
   // 	filter: brightness(0) saturate(100%) invert(27%) sepia(18%) saturate(1305%) hue-rotate(168deg)
@@ -113,14 +113,15 @@
   // }
 
   &:hover {
-    border: 1px solid var(--primary-600);
-    background-color: var(--primary-100);
+    border: 1px solid $--primary;
+    background-color: $--primary;
     box-shadow: 0 4px 6px 0 rgba(32, 114, 185, 0.6);
+    color: #fff;
   }
 
   &:active {
-    border: 1px solid var(--primary-700);
-    background-color: var(--primary-200);
+    border: 1px solid $--primary-active;
+    background-color: $--primary-active;
     box-shadow: none;
   }
 
@@ -130,8 +131,8 @@
     box-shadow: none;
 
     img {
-      filter: brightness(0) saturate(100%) invert(97%) sepia(0%) saturate(1%) hue-rotate(167deg)
-      brightness(87%) contrast(88%);
+      filter: brightness(0) saturate(100%) invert(97%) sepia(0%) saturate(1%)
+        hue-rotate(167deg) brightness(87%) contrast(88%);
     }
   }
 
@@ -142,7 +143,7 @@
   cursor: pointer;
   background: var(--accent-500);
   border-radius: 8px;
-  font-family: 'Open Sans', serif;
+  font-family: "Open Sans", serif;
   font-style: normal;
   font-weight: 800;
   font-size: 16px;
@@ -168,8 +169,8 @@
     box-shadow: none;
 
     img {
-      filter: brightness(0) saturate(100%) invert(40%) sepia(0%) saturate(1325%) hue-rotate(195deg)
-      brightness(96%) contrast(88%);
+      filter: brightness(0) saturate(100%) invert(40%) sepia(0%) saturate(1325%)
+        hue-rotate(195deg) brightness(96%) contrast(88%);
     }
   }
 
@@ -199,7 +200,7 @@
   cursor: pointer;
   border: 0;
   background: transparent;
-  font-family: 'Open Sans', serif;
+  font-family: "Open Sans", serif;
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -212,26 +213,25 @@
   font-weight: 400;
 }
 
-
 .cta-gradient {
   transition: all 1s ease-in;
   position: relative;
   border-radius: 8px;
   border: 2px solid #009940;
-  cursor:pointer;
+  cursor: pointer;
   /* Form Shadow */
   font-style: normal;
   font-weight: 800;
   font-size: 16px;
   line-height: 16px;
   letter-spacing: -0.02em;
-  box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.40);
-  color: #FFF;
+  box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.4);
+  color: #fff;
   /* 3D Button Text Shadow */
   /* Desktop & Tablet/Header 4 */
   // font-family: Open Sans;
   display: flex;
-  width:100%;
+  width: 100%;
   max-width: 276px;
   align-self: center;
 
@@ -242,17 +242,15 @@
   gap: 5px;
   flex-shrink: 0;
   overflow: hidden;
-  background: linear-gradient(91deg, #43E200 0.86%, #00AB4D 94.68%);
-  text-shadow: 0 1px 3px rgba(34, 34, 34, 0.40);
+  background: linear-gradient(91deg, #43e200 0.86%, #00ab4d 94.68%);
+  text-shadow: 0 1px 3px rgba(34, 34, 34, 0.4);
 
-  *{
+  * {
     z-index: 2;
   }
 
-
-
-  &::after{
-    content: '';
+  &::after {
+    content: "";
     position: absolute;
     z-index: 1;
     left: 0;
@@ -260,18 +258,36 @@
     right: 0;
     bottom: 0;
     border-radius: 8px;
-    background: var(--3D-Gradient-Hover, linear-gradient(180deg, #DAFFCA 0%, #60AE3F 17.19%, #438A25 37.5%, #438A25 61.46%, #60AE3F 81.77%, #DAFFCA 100%));
+    background: var(
+      --3D-Gradient-Hover,
+      linear-gradient(
+        180deg,
+        #daffca 0%,
+        #60ae3f 17.19%,
+        #438a25 37.5%,
+        #438a25 61.46%,
+        #60ae3f 81.77%,
+        #daffca 100%
+      )
+    );
 
     opacity: 0;
     transition: all 0.3s ease-in-out;
   }
-  &:before{
-    content: '';
+  &:before {
+    content: "";
     // border: 2px solid #009940;
     position: absolute;
 
-
-    background: var(--3D-Accent, linear-gradient(180deg, rgba(255,255,255,0.2) , rgba(255,255,255,0.9) , rgba(255,255,255,0.2) ));
+    background: var(
+      --3D-Accent,
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.9),
+        rgba(255, 255, 255, 0.2)
+      )
+    );
     opacity: 1;
     -webkit-transform: skew(-20deg);
     -moz-transform: skew(-20deg);
@@ -283,19 +299,17 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width:35px;
+    width: 35px;
     height: 100%;
     animation: buttonShineMovement 4s ease-in;
     animation-iteration-count: infinite;
   }
-  &:hover{
-    &:after{
+  &:hover {
+    &:after {
       opacity: 1;
     }
     // box-shadow: 2px 4px 10px 0 rgba(34, 34, 34, 0.47) inset;
   }
-
-
 }
 
 .plane-orange {
@@ -328,7 +342,7 @@
 
     img {
       filter: brightness(0) saturate(100%) invert(40%) sepia(0%) saturate(1325%)
-      hue-rotate(195deg) brightness(96%) contrast(88%);
+        hue-rotate(195deg) brightness(96%) contrast(88%);
     }
   }
 
@@ -339,12 +353,12 @@
   border-radius: 8px;
   box-shadow: 0 3px 10px 2px #00000026;
   background: linear-gradient(
-                  0deg,
-                  rgb(253, 182, 153) 0%,
-                  rgb(253, 110, 50) 22%,
-                  rgb(244, 103, 45) 51%,
-                  rgb(253, 110, 50) 80%,
-                  rgb(207, 77, 23) 100%
+    0deg,
+    rgb(253, 182, 153) 0%,
+    rgb(253, 110, 50) 22%,
+    rgb(244, 103, 45) 51%,
+    rgb(253, 110, 50) 80%,
+    rgb(207, 77, 23) 100%
   );
   overflow: hidden;
   border: 0;
@@ -373,7 +387,7 @@
 
     img {
       filter: brightness(0) saturate(100%) invert(40%) sepia(0%) saturate(1325%)
-      hue-rotate(195deg) brightness(96%) contrast(88%);
+        hue-rotate(195deg) brightness(96%) contrast(88%);
     }
   }
 
@@ -392,7 +406,7 @@
 }
 
 .shimmer::before {
-  content: '';
+  content: "";
   position: absolute;
   height: 100%;
   top: 0;
@@ -401,12 +415,12 @@
   opacity: 1;
   transition: opacity 0.5s ease;
   background: linear-gradient(
-                  0deg,
-                  rgb(253, 182, 153) 0%,
-                  rgb(253, 110, 50) 22%,
-                  rgb(255, 128, 76) 51%,
-                  rgb(255, 172, 137) 80%,
-                  rgb(255, 96, 30) 100%
+    0deg,
+    rgb(253, 182, 153) 0%,
+    rgb(253, 110, 50) 22%,
+    rgb(255, 128, 76) 51%,
+    rgb(255, 172, 137) 80%,
+    rgb(255, 96, 30) 100%
   );
   transform: skew(-20deg);
 }
@@ -446,7 +460,7 @@
 
 .button-label-container {
   display: flex;
-  width:100%;
+  width: 100%;
   max-width: 276px;
 
   align-self: center;
@@ -458,22 +472,20 @@
   gap: 5px;
   flex-shrink: 0;
   overflow: hidden;
-  background: linear-gradient(91deg, #43E200 0.86%, #00AB4D 94.68%);
-  text-shadow: 0 1px 3px rgba(34, 34, 34, 0.40);
+  background: linear-gradient(91deg, #43e200 0.86%, #00ab4d 94.68%);
+  text-shadow: 0 1px 3px rgba(34, 34, 34, 0.4);
 
   //@include mobilexs{
   //  font-size: 16px;
   //  line-height: 16px;
   //}
 
-  *{
+  * {
     z-index: 2;
   }
 
-
-
-  &::after{
-    content: '';
+  &::after {
+    content: "";
     // border: 2px solid #009940;
     position: absolute;
     z-index: 1;
@@ -482,20 +494,37 @@
     right: 0;
     bottom: 0;
     border-radius: 8px;
-    background: var(--3D-Gradient-Hover, linear-gradient(180deg, #DAFFCA 0%, #60AE3F 17.19%, #438A25 37.5%, #438A25 61.46%, #60AE3F 81.77%, #DAFFCA 100%));
+    background: var(
+      --3D-Gradient-Hover,
+      linear-gradient(
+        180deg,
+        #daffca 0%,
+        #60ae3f 17.19%,
+        #438a25 37.5%,
+        #438a25 61.46%,
+        #60ae3f 81.77%,
+        #daffca 100%
+      )
+    );
 
     opacity: 0;
     transition: all 0.3s ease-in-out;
   }
 
-  &:before{
-    content: '';
+  &:before {
+    content: "";
     // border: 2px solid #009940;
     position: absolute;
 
-
-    background: var(--3D-Accent, linear-gradient(180deg, rgba(255,255,255,0.2) , rgba(255,255,255,0.9) , rgba(255,255,255,0.2) ));
-
+    background: var(
+      --3D-Accent,
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.9),
+        rgba(255, 255, 255, 0.2)
+      )
+    );
 
     opacity: 1;
     -webkit-transform: skew(-20deg);
@@ -508,30 +537,23 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width:35px;
+    width: 35px;
     height: 100%;
     animation: buttonShineMovement 4s ease-in;
     animation-iteration-count: infinite;
   }
 
-
-  &:hover{
-    &:after{
+  &:hover {
+    &:after {
       opacity: 1;
     }
     // box-shadow: 2px 4px 10px 0 rgba(34, 34, 34, 0.47) inset;
   }
-
-
-
-
-
-
 }
 
-.secondary-button{
+.secondary-button {
   color: var(--Gray, #666);
-  font-family: 'Open Sans', serif;
+  font-family: "Open Sans", serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -540,24 +562,20 @@
   cursor: pointer;
   border: 0;
   background: transparent;
-
 }
 
-
 @keyframes buttonShineMovement {
-
-  0%,79%{
+  0%,
+  79% {
     translate: -15px;
     opacity: 0;
   }
-  80%{
+  80% {
     opacity: 1;
   }
 
-  100%{
+  100% {
     opacity: 1;
     translate: 250px;
-
   }
-
 }

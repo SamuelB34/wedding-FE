@@ -1,3 +1,9 @@
+import { WebTable } from "@/app/layout/_components/table/WebTable";
+
 export default function Guests() {
-  return <>Guests page</>;
+  return (
+    <>
+      <WebTable />
+    </>
+  );
 }
