@@ -1,8 +1,74 @@
+@import "src/shared/scss/_variables.scss";
+@import "src/shared/scss/_media-queries.scss";
+
 .table {
   width: 100%;
   background-color: #fff;
 
   &__content {
     padding: 32px;
+    overflow: scroll;
+    @include mobile {
+      padding: 8px;
+    }
+
+    &--table {
+      width: 100%;
+      margin-top: 16px;
+      border: none;
+      border-spacing: 0;
+      border-radius: 4px;
+
+      @include mobile {
+        display: none;
+      }
+
+      &-mobile {
+        display: none;
+        @include mobile {
+          display: block;
+
+          &:nth-child(odd) {
+            background-color: $--primary-light;
+          }
+        }
+      }
+
+      &__head {
+        background-color: $--secondary;
+        width: 100%;
+        border-radius: 4px;
+
+        &--label {
+          color: $--light;
+          font-family: Inter, sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          padding: 8px;
+        }
+      }
+
+      &__body {
+        &--row {
+          &:nth-child(odd) {
+            background-color: $--primary-light;
+          }
+
+          &__checkbox {
+            text-align: center;
+            width: 20px;
+          }
+
+          &__value {
+            padding: 8px;
+            font-size: 14px;
+            font-weight: 400;
+            font-family: Inter, sans-serif;
+            border-left: 1px solid $--light;
+            text-align: center;
+          }
+        }
+      }
+    }
   }
 }

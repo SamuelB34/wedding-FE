@@ -1,0 +1,62 @@
+@import "src/shared/scss/_variables.scss";
+
+.mobile-column {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 0.8fr 1fr 0.5fr;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+
+    &--left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &__column-name {
+        font-family: Inter, sans-serif;
+        font-weight: 600;
+      }
+    }
+
+    &--center {
+      display: flex;
+      align-items: center;
+      &__value {
+        font-family: Inter, sans-serif;
+      }
+    }
+
+    &--right {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      padding-right: 12px;
+
+      &__button {
+        border: 2px solid $--primary;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          background-color: $--primary;
+
+          img {
+            filter: brightness(0) saturate(100%) invert(100%) sepia(0%)
+              saturate(2%) hue-rotate(330deg) brightness(104%) contrast(101%);
+          }
+        }
+
+        &--chevron {
+          padding-top: 2px;
+        }
+      }
+    }
+  }
+}

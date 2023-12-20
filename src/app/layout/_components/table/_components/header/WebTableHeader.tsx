@@ -43,6 +43,9 @@ export function WebTableHeader() {
                   type="text"
                   placeholder={"Search"}
                   className={styles["header__bottom--search__container--input"]}
+                  onChange={(value) => {
+                    console.log(value);
+                  }}
                 />
               </div>
             </label>

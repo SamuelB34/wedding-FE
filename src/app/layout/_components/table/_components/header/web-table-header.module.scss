@@ -1,3 +1,5 @@
+@import "src/shared/scss/_variables.scss";
+
 .header {
   width: 100%;
   display: flex;
@@ -11,7 +13,7 @@
     align-items: center;
 
     &--title {
-      color: var(--Primary-Violet-Violet-02-Main, #515192);
+      color: $--primary;
       font-family: Inter, sans-serif;
       font-size: 24px;
       font-style: normal;
@@ -24,7 +26,7 @@
       justify-content: center;
       align-items: center;
       border-radius: 4px;
-      border: 1px solid #515192;
+      border: 1px solid $--primary;
       cursor: pointer;
 
       &__img {
@@ -32,7 +34,7 @@
       }
 
       &:hover {
-        background-color: #515192;
+        background-color: $--primary;
         img {
           filter: brightness(0) saturate(100%) invert(100%) sepia(12%)
             saturate(7500%) hue-rotate(184deg) brightness(103%) contrast(115%);
@@ -57,7 +59,7 @@
 
     &--search {
       border-radius: 4px;
-      border: 1px solid #92929b;
+      border: 1px solid $--primary;
       background: var(--Black-White, #fff);
 
       &__container {
