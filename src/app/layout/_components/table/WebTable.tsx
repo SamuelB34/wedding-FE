@@ -6,58 +6,58 @@ import { WebMobileColumn } from "@/app/layout/_components/table/_components/mobi
 export function WebTable() {
   const columns = [
     {
-      name: "example_1",
-      label: "Example 1",
+      name: "name",
+      label: "Name",
     },
     {
-      name: "example_2",
-      label: "Example 2",
+      name: "email",
+      label: "Email",
     },
     {
-      name: "example_3",
-      label: "Example 3",
+      name: "phone_number",
+      label: "Phone number",
     },
     {
-      name: "example_4",
-      label: "Example 4",
+      name: "table",
+      label: "Table",
     },
     {
-      name: "example_5",
-      label: "Example 5",
+      name: "group",
+      label: "Group",
     },
     {
-      name: "example_6",
-      label: "Example 6",
+      name: "saw",
+      label: "Saw invitation",
     },
   ];
 
   const content: any[] = [
     {
       id: 1,
-      example_1: "Test",
-      example_2: "Test",
-      example_3: "Test",
-      example_4: "Test",
-      example_5: "Test",
-      example_6: "Test",
+      name: "Samuel Barragan",
+      email: "samuel.barragan34@hotmail.com",
+      phone_number: "686 578 2380",
+      table: "1",
+      group: "Fam. Barragan",
+      saw: "yes",
     },
     {
       id: 2,
-      example_1: "Test",
-      example_2: "Test",
-      example_3: "Test",
-      example_4: "Test",
-      example_5: "Test",
-      example_6: "Test",
+      name: "Melissa Araiza",
+      email: "melissa@hotmail.com",
+      phone_number: "686 116 1547",
+      table: "1",
+      group: "Fam. Barragan",
+      saw: "Yes",
     },
     {
       id: 3,
-      example_1: "Test",
-      example_2: "Test",
-      example_3: "Test",
-      example_4: "Test",
-      example_5: "Test",
-      example_6: "Test",
+      name: "Messi",
+      email: "messi_10@hotmail.com",
+      phone_number: "686 101 0101",
+      table: "10",
+      group: "World Cup Champions",
+      saw: "Yes",
     },
   ];
 
@@ -121,7 +121,7 @@ export function WebTable() {
               key={item.id}
               className={styles["table__content--table-mobile"]}
             >
-              <WebMobileColumn />
+              <WebMobileColumn columns={columns} content={item} />
             </div>
           ))}
         </div>
