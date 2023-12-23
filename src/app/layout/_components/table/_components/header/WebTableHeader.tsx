@@ -3,6 +3,7 @@ import styles from "./web-table-header.module.scss";
 import Image from "next/image";
 import { useState } from "react";
 import WedButton from "@/shared/components/wed-button/WedButton";
+import { WebChip } from "@/shared/components/web-chip/WebChip";
 
 export function WebTableHeader() {
   const [views] = useState([{ name: "all", label: "All" }]);
@@ -53,12 +54,14 @@ export function WebTableHeader() {
             {/*Views*/}
             <div className={styles["header__bottom--views"]}>
               <span className={styles["header__bottom--views__label"]}>
-                Views
+                View:
               </span>
 
               {/*TODO Add chips on next map*/}
               {views.map((view) => {
-                return <label key={view.name}> {view.label} </label>;
+                return (
+                  <WebChip color={"blue"} text={view.label} key={view.name} />
+                );
               })}
             </div>
           </div>
@@ -66,10 +69,26 @@ export function WebTableHeader() {
           {/*Right*/}
           <div className={styles["header__bottom--right"]}>
             <WedButton style={"outlined"} type={"button"}>
-              <>Send Invitation</>
+              <span className={styles["header__bottom--right__label"]}>
+                <Image
+                  src={"/components/table/header/whats-app.svg"}
+                  alt={"whats"}
+                  width={16}
+                  height={16}
+                />
+                Send Invitation
+              </span>
             </WedButton>
             <WedButton style={"outlined"} type={"button"}>
-              <>Delete</>
+              <span className={styles["header__bottom--right__label"]}>
+                <Image
+                  src={"/components/table/header/trash.svg"}
+                  alt={"whats"}
+                  width={24}
+                  height={24}
+                />
+                Delete
+              </span>
             </WedButton>
           </div>
         </div>

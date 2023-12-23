@@ -5,6 +5,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 0.5fr;
   cursor: pointer;
+  overflow: scroll;
 
   &__content {
     display: flex;

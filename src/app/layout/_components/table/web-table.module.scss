@@ -8,8 +8,12 @@
   &__content {
     padding: 32px;
     overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
     @include mobile {
-      padding: 8px;
+      padding: 16px;
     }
 
     &--table {

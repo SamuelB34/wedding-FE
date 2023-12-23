@@ -1,5 +1,5 @@
-@import '@/shared/scss/_media-queries.scss';
-@import '@/shared/scss/_variables.scss';
+@import "@/shared/scss/_media-queries.scss";
+@import "@/shared/scss/_variables.scss";
 
 .body-container {
   width: 100%;
@@ -26,7 +26,7 @@
     }
 
     &--title {
-      font-family: 'Great Vibes', cursive;
+      font-family: "Great Vibes", cursive;
       font-weight: 800;
       font-size: 20px;
       cursor: pointer;
@@ -52,7 +52,7 @@
         }
 
         &--link {
-          font-family: 'Open Sans', sans-serif;
+          font-family: "Open Sans", sans-serif;
           text-decoration: none;
           color: $--dark-gray;
           font-size: 16px;
@@ -84,13 +84,13 @@
       &__letter {
         color: #fff;
         font-size: 14px;
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
       }
 
       &__name {
         color: $--dark-gray;
         font-size: 14px;
-        font-family: 'Open Sans', sans-serif;
+        font-family: "Open Sans", sans-serif;
         display: none;
 
         @include desktop {
@@ -112,6 +112,7 @@
   top: 0;
   left: -100%;
   transition: left 400ms;
+  z-index: 1;
 
   &-open {
     @include desktop {
@@ -124,6 +125,7 @@
     background-color: #fff;
     top: 0;
     left: 0;
+    z-index: 1;
 
     &__content {
       padding: 32px;
@@ -144,7 +146,7 @@
         cursor: pointer;
 
         &__text {
-          font-family: 'Open Sans', sans-serif;
+          font-family: "Open Sans", sans-serif;
           font-size: 16px;
         }
       }
@@ -157,7 +159,7 @@
         margin-top: 48px;
 
         &__route {
-          font-family: 'Open Sans', sans-serif;
+          font-family: "Open Sans", sans-serif;
           padding: 16px;
           text-decoration: none;
           font-size: 24px;
@@ -185,7 +187,7 @@
           &--text {
             color: $--dark-gray;
             font-size: 16px;
-            font-family: 'Open Sans', sans-serif;
+            font-family: "Open Sans", sans-serif;
           }
         }
       }

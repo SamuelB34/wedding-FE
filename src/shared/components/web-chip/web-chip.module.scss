@@ -1,0 +1,99 @@
+.chip {
+  border-radius: 4px;
+
+  &-red {
+    background-color: #ffd1d5;
+    border: 1px solid #ffd1d5;
+
+    &__label {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: #c71b2c;
+      padding: 2px 6px;
+    }
+  }
+
+  &-yellow {
+    background-color: #ffeaa9;
+    border: 1px solid #ffeaa9;
+
+    &__label {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: #a74d02;
+      padding: 2px 6px;
+    }
+  }
+
+  &-green {
+    background-color: #ceff9a;
+    border: 1px solid #ceff9a;
+
+    &__label {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: #458600;
+      padding: 2px 6px;
+    }
+  }
+
+  &-dark-green {
+    background-color: #c7f8e1;
+    border: 1px solid #c7f8e1;
+
+    &__label {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: #458600;
+      padding: 2px 6px;
+    }
+  }
+
+  &-blue {
+    background-color: #d0e3ff;
+    border: 1px solid #d0e3ff;
+
+    &__label {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: #065ddc;
+      padding: 2px 6px;
+    }
+  }
+
+  &-purple {
+    background-color: #f7dfff;
+    border: 1px solid #f7dfff;
+
+    &__label {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: #b01da2;
+      padding: 2px 6px;
+    }
+  }
+
+  &-gray {
+    background-color: #e0e0e0;
+    border: 1px solid #e0e0e0;
+
+    &__label {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: #5a5356;
+      padding: 2px 6px;
+    }
+  }
+
+  &-outlined {
+    border: 1px solid #ccccd1;
+    background-color: #fff;
+
+    &__label {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: #646470;
+      padding: 2px 6px;
+    }
+  }
+}

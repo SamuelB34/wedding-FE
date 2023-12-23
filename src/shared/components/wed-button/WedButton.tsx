@@ -25,7 +25,7 @@ interface Props {
 function WedButton({
   type = "button",
   style = "basic",
-  height = "46px",
+  height = "40px",
   onClick,
   disabled = false,
   loading = false,
