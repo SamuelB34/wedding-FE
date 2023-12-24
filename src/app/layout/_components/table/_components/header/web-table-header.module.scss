@@ -13,13 +13,40 @@
     justify-content: space-between;
     align-items: center;
 
+    &--count {
+      font-size: 14px;
+      font-family: Inter, sans-serif;
+
+      &-loading {
+        height: 12px;
+        width: 70px;
+        border-radius: 4px;
+        overflow: hidden;
+        background-color: $--gray;
+      }
+    }
+
     &--title {
       color: $--primary;
       font-family: Inter, sans-serif;
       font-size: 24px;
       font-style: normal;
       font-weight: 600;
-      line-height: 30px; /* 125% */
+      line-height: 30px;
+
+      &-container {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      &-loading {
+        height: 24px;
+        width: 120px;
+        border-radius: 4px;
+        background-color: $--gray;
+        overflow: hidden;
+      }
     }
 
     &--refresh {
@@ -32,6 +59,14 @@
 
       &__img {
         padding: 8px;
+      }
+
+      &-loading {
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+        background-color: $--gray;
+        overflow: hidden;
       }
 
       &:hover {
@@ -63,6 +98,14 @@
       gap: 8px;
       margin-left: 8px;
 
+      &-loading {
+        height: 20px;
+        width: 72px;
+        border-radius: 4px;
+        background-color: $--gray;
+        overflow: hidden;
+      }
+
       &__label {
         font-family: Inter, sans-serif;
         font-size: 14px;
@@ -87,6 +130,30 @@
       align-items: center;
       flex-direction: row;
 
+      &-send-loading {
+        width: 142px;
+        height: 40px;
+        border-radius: 4px;
+        background-color: $--gray;
+        overflow: hidden;
+
+        @include mobile {
+          width: 100%;
+        }
+      }
+
+      &-delete-loading {
+        width: 92px;
+        height: 40px;
+        border-radius: 4px;
+        background-color: $--gray;
+        overflow: hidden;
+
+        @include mobile {
+          width: 100%;
+        }
+      }
+
       &__label {
         font-family: Inter, sans-serif;
         font-size: 14px;
@@ -101,6 +168,22 @@
       border-radius: 4px;
       border: 1px solid $--primary;
       background: var(--Black-White, #fff);
+
+      &-loading {
+        width: 227px;
+        height: 28px;
+        border-radius: 4px;
+        background-color: $--gray;
+        overflow: hidden;
+
+        @include mobile {
+          width: 100%;
+          height: 40px;
+          border-radius: 4px;
+          background-color: $--gray;
+          overflow: hidden;
+        }
+      }
 
       @include mobile {
         width: 100%;
@@ -122,5 +205,34 @@
         }
       }
     }
+  }
+}
+
+.skeleton {
+  width: 0;
+  height: 100%;
+  box-shadow: 0 0 50px 50px rgba(255, 255, 255, 1);
+  animation: skeleton 1.3s linear infinite;
+  opacity: 0;
+}
+
+@keyframes skeleton {
+  0% {
+    transform: translate(-50px);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  50% {
+    transform: translate(0px);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translate(300px);
+    opacity: 1;
   }
 }

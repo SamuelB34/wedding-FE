@@ -3,14 +3,17 @@ import styles from "./web-mobile-column.module.scss";
 import Image from "next/image";
 import React from "react";
 import { useState } from "react";
+import { ColumnTypes } from "@/app/layout/_components/table/WebTable";
+import useColumnContent from "@/shared/hooks/UseColumnContent";
 
 interface Props {
-  columns: { name: string; label: string }[];
+  columns: { name: string; label: string; type: ColumnTypes }[];
   content: any;
 }
 
 export function WebMobileColumn({ columns, content }: Props) {
   const [open, setOpen] = useState(false);
+  const columnContent = useColumnContent();
 
   const moreDetails = () => {
     setOpen(!open);
@@ -91,7 +94,7 @@ export function WebMobileColumn({ columns, content }: Props) {
                   <span
                     className={styles["mobile-column__content--center__value"]}
                   >
-                    {content[column.name]}
+                    {columnContent(column.type, content[column.name], styles)}
                   </span>
                 </div>
                 <div></div>
