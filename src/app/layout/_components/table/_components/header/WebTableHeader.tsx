@@ -1,22 +1,42 @@
 "use client";
 import styles from "./web-table-header.module.scss";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WedButton from "@/shared/components/wed-button/WedButton";
 import { WebChip } from "@/shared/components/web-chip/WebChip";
+import { numberFormat } from "@/shared/functions/format";
+import { useDebounce } from "@/shared/hooks/UseDebounce";
 
 interface Props {
   loading: boolean;
   records: number;
+  columnsSelected: any[];
   sendButton?: boolean;
+  sendClick?: () => void;
+  deleteClick?: () => void;
+  refreshClick?: () => void;
+  viewClick?: (view: string) => void;
+  searchFunction?: (view: string) => void;
 }
 
 export function WebTableHeader({
   loading = true,
-  records = 0,
+  records,
   sendButton = false,
+  sendClick,
+  deleteClick,
+  refreshClick,
+  viewClick,
+  columnsSelected,
+  searchFunction,
 }: Props) {
   const [views] = useState([{ name: "all", label: "All" }]);
+  const [value, setValue] = useState<string>("");
+  const debouncedValue = useDebounce<string>(value, 800);
+
+  useEffect(() => {
+    if (searchFunction) searchFunction(debouncedValue);
+  }, [debouncedValue]);
 
   return (
     <>
@@ -28,9 +48,10 @@ export function WebTableHeader({
               <span className={styles["header__top--title"]}>
                 Title Example
               </span>
+
               <span className={styles["header__top--count"]}>
                 {" "}
-                {records} records{" "}
+                {numberFormat(records)} records{" "}
               </span>
             </div>
           ) : (
@@ -46,7 +67,10 @@ export function WebTableHeader({
 
           {/*Refresh button*/}
           {!loading ? (
-            <div className={styles["header__top--refresh"]}>
+            <div
+              className={styles["header__top--refresh"]}
+              onClick={refreshClick}
+            >
               <Image
                 className={styles["header__top--refresh__img"]}
                 src={"/components/table/refresh.svg"}
@@ -82,8 +106,8 @@ export function WebTableHeader({
                     className={
                       styles["header__bottom--search__container--input"]
                     }
-                    onChange={(value) => {
-                      console.log(value);
+                    onChange={(text) => {
+                      setValue(text.target.value);
                     }}
                   />
                 </div>
@@ -104,7 +128,14 @@ export function WebTableHeader({
                 {/*TODO Add chips on next map*/}
                 {views.map((view) => {
                   return (
-                    <WebChip color={"blue"} text={view.label} key={view.name} />
+                    <WebChip
+                      color={"blue"}
+                      text={view.label}
+                      key={view.name}
+                      onClick={() => {
+                        if (viewClick) viewClick(view.name);
+                      }}
+                    />
                   );
                 })}
               </div>
@@ -120,7 +151,12 @@ export function WebTableHeader({
             {sendButton && (
               <>
                 {!loading ? (
-                  <WedButton style={"outlined"} type={"button"}>
+                  <WedButton
+                    style={"outlined"}
+                    type={"button"}
+                    onClick={sendClick}
+                    disabled={!columnsSelected.length}
+                  >
                     <span className={styles["header__bottom--right__label"]}>
                       <Image
                         src={"/components/table/header/whats-app.svg"}
@@ -140,7 +176,12 @@ export function WebTableHeader({
             )}
 
             {!loading ? (
-              <WedButton style={"outlined"} type={"button"}>
+              <WedButton
+                style={"outlined"}
+                type={"button"}
+                onClick={deleteClick}
+                disabled={!columnsSelected.length}
+              >
                 <span className={styles["header__bottom--right__label"]}>
                   <Image
                     src={"/components/table/header/trash.svg"}

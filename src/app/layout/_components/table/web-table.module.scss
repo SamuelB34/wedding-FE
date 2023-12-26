@@ -49,6 +49,14 @@
           font-size: 14px;
           font-weight: 600;
           padding: 8px;
+
+          &-loading {
+            width: 120px;
+            height: 14px;
+            border-radius: 4px;
+            background-color: $--gray;
+            overflow: hidden;
+          }
         }
       }
 
@@ -56,6 +64,10 @@
         &--row {
           &:nth-child(odd) {
             background-color: $--primary-light;
+          }
+
+          &__content {
+            text-align: center;
           }
 
           &__checkbox {
@@ -81,5 +93,34 @@
         }
       }
     }
+  }
+}
+
+.skeleton {
+  width: 0;
+  height: 100%;
+  box-shadow: 0 0 50px 50px rgba(255, 255, 255, 1);
+  animation: skeleton 1.3s linear infinite;
+  opacity: 0;
+}
+
+@keyframes skeleton {
+  0% {
+    transform: translate(-50px);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  50% {
+    transform: translate(0px);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translate(300px);
+    opacity: 1;
   }
 }

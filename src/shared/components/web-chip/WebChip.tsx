@@ -1,4 +1,5 @@
 import styles from "./web-chip.module.scss";
+import React from "react";
 
 interface Props {
   text: string;
@@ -12,7 +13,7 @@ interface Props {
     | "gray"
     | "outlined";
   close?: boolean;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: any;
 }
 export function WebChip({
   text,
@@ -21,7 +22,13 @@ export function WebChip({
   onClick,
 }: Props) {
   return (
-    <div className={`${styles["chip"]} ${styles[`chip-${color}`]}`}>
+    <div
+      className={`${styles["chip"]} ${styles[`chip-${color}`]}`}
+      style={{ cursor: onClick ? "pointer" : "default" }}
+      onClick={(event) => {
+        if (onClick) onClick(event);
+      }}
+    >
       <span className={`${styles[`chip-${color}__label`]}`}> {text} </span>
     </div>
   );

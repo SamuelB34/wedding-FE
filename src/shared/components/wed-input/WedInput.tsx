@@ -69,7 +69,6 @@ export const WedInput = ({
   useEffect(() => {
     let stylesString = "input";
     if (input_mode === "tel") stylesString += " " + "tel";
-    if (selectType.length > 0) stylesString += " " + "select_type";
     if (disabled) stylesString += " " + "disabled";
     if (error) {
       stylesString += " " + "error";
