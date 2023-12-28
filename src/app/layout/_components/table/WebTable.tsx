@@ -90,6 +90,7 @@ export function WebTable({
             searchFunction={(value) => {
               if (searchFunction) searchFunction(value);
             }}
+            selectAll={selectAll}
           />
 
           {/*Tablet/Desktop Table */}
@@ -230,6 +231,12 @@ export function WebTable({
                     columns={columns}
                     content={item}
                     loading={loading}
+                    selected={columnsSelected.some(
+                      (value) => value === item["id"].toString(),
+                    )}
+                    onChange={(value) => {
+                      selectColumn(value.id.toString());
+                    }}
                   />
                 </div>
               ))}
@@ -245,6 +252,8 @@ export function WebTable({
                     columns={columns}
                     content={item}
                     loading={loading}
+                    selected={false}
+                    onChange={() => {}}
                   />
                 </div>
               ))}

@@ -15,6 +15,7 @@ interface Props {
   sendClick?: () => void;
   deleteClick?: () => void;
   refreshClick?: () => void;
+  selectAll?: () => void;
   viewClick?: (view: string) => void;
   searchFunction?: (view: string) => void;
 }
@@ -29,6 +30,7 @@ export function WebTableHeader({
   viewClick,
   columnsSelected,
   searchFunction,
+  selectAll,
 }: Props) {
   const [views] = useState([{ name: "all", label: "All" }]);
   const [value, setValue] = useState<string>("");
@@ -120,25 +122,30 @@ export function WebTableHeader({
 
             {/*Views*/}
             {!loading ? (
-              <div className={styles["header__bottom--views"]}>
-                <span className={styles["header__bottom--views__label"]}>
-                  View:
-                </span>
+              <>
+                <div className={styles["header__bottom--views"]}>
+                  <span className={styles["header__bottom--views__label"]}>
+                    View:
+                  </span>
 
-                {/*TODO Add chips on next map*/}
-                {views.map((view) => {
-                  return (
-                    <WebChip
-                      color={"blue"}
-                      text={view.label}
-                      key={view.name}
-                      onClick={() => {
-                        if (viewClick) viewClick(view.name);
-                      }}
-                    />
-                  );
-                })}
-              </div>
+                  {/*TODO Add chips on next map*/}
+                  {views.map((view) => {
+                    return (
+                      <WebChip
+                        color={"blue"}
+                        text={view.label}
+                        key={view.name}
+                        onClick={() => {
+                          if (viewClick) viewClick(view.name);
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+                <span className={styles["select-all"]} onClick={selectAll}>
+                  Select All
+                </span>
+              </>
             ) : (
               <div className={styles["header__bottom--views-loading"]}>
                 <div className={styles["skeleton"]}></div>

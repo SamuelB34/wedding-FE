@@ -10,9 +10,17 @@ interface Props {
   columns: { name: string; label: string; type: ColumnTypes }[];
   content: any;
   loading: boolean;
+  selected: boolean;
+  onChange: (value: { active: boolean; id: string }) => void;
 }
 
-export function WebMobileColumn({ columns, content, loading }: Props) {
+export function WebMobileColumn({
+  columns,
+  content,
+  loading,
+  onChange,
+  selected,
+}: Props) {
   const [open, setOpen] = useState(false);
   const columnContent = useColumnContent();
 
@@ -25,7 +33,14 @@ export function WebMobileColumn({ columns, content, loading }: Props) {
       <div className={styles["mobile-column"]}>
         <div className={styles["mobile-column__content"]}>
           <div className={styles["mobile-column__content--left"]}>
-            <input type="checkbox" disabled={loading} />
+            <input
+              type="checkbox"
+              disabled={loading}
+              onChange={() => {
+                onChange({ active: !selected, id: content["id"] });
+              }}
+              checked={selected}
+            />
 
             {
               // Loading
