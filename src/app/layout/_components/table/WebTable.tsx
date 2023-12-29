@@ -21,6 +21,9 @@ interface Props {
   refreshClick?: () => void;
   viewClick?: (view: string) => void;
   searchFunction?: (view: string) => void;
+  viewAction?: (id: string) => void;
+  editAction?: (id: string) => void;
+  deleteAction?: (id: string) => void;
 }
 
 export function WebTable({
@@ -34,6 +37,9 @@ export function WebTable({
   refreshClick,
   viewClick,
   searchFunction,
+  viewAction,
+  editAction,
+  deleteAction,
 }: Props) {
   const columnContent = useColumnContent();
   const [columnSelected, setColumnSelected] = useState<boolean>(false);
@@ -115,6 +121,9 @@ export function WebTable({
                       {column.label}
                     </th>
                   ))}
+                  <th className={styles["table__content--table__head--label"]}>
+                    Actions
+                  </th>
                 </tr>
               ) : (
                 // Loading
@@ -174,6 +183,60 @@ export function WebTable({
                           )}
                         </td>
                       ))}
+                      <td
+                        className={styles["table__content--table__head--label"]}
+                      >
+                        <div
+                          className={
+                            styles[
+                              "table__content--table__head--label__actions"
+                            ]
+                          }
+                        >
+                          <Image
+                            className={
+                              styles[
+                                "table__content--table__head--label__actions--img"
+                              ]
+                            }
+                            src={"/components/table/eye.svg"}
+                            alt={"eye"}
+                            width={24}
+                            height={24}
+                            onClick={() => {
+                              if (viewAction) viewAction(item["id"]);
+                            }}
+                          />
+                          <Image
+                            className={
+                              styles[
+                                "table__content--table__head--label__actions--img"
+                              ]
+                            }
+                            src={"/components/table/pencil.svg"}
+                            alt={"edit"}
+                            width={16}
+                            height={16}
+                            onClick={() => {
+                              if (editAction) editAction(item["id"]);
+                            }}
+                          />
+                          <Image
+                            className={
+                              styles[
+                                "table__content--table__head--label__actions--img"
+                              ]
+                            }
+                            src={"/components/table/header/trash.svg"}
+                            alt={"delete"}
+                            width={24}
+                            height={24}
+                            onClick={() => {
+                              if (deleteAction) deleteAction(item["id"]);
+                            }}
+                          />
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </>
@@ -236,6 +299,15 @@ export function WebTable({
                     )}
                     onChange={(value) => {
                       selectColumn(value.id.toString());
+                    }}
+                    viewAction={(id: string) => {
+                      if (viewAction) viewAction(id);
+                    }}
+                    editAction={(id: string) => {
+                      if (editAction) editAction(id);
+                    }}
+                    deleteAction={(id: string) => {
+                      if (deleteAction) deleteAction(id);
                     }}
                   />
                 </div>

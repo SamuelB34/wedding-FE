@@ -12,6 +12,9 @@ interface Props {
   loading: boolean;
   selected: boolean;
   onChange: (value: { active: boolean; id: string }) => void;
+  viewAction?: (id: string) => void;
+  editAction?: (id: string) => void;
+  deleteAction?: (id: string) => void;
 }
 
 export function WebMobileColumn({
@@ -20,6 +23,9 @@ export function WebMobileColumn({
   loading,
   onChange,
   selected,
+  viewAction,
+  editAction,
+  deleteAction,
 }: Props) {
   const [open, setOpen] = useState(false);
   const columnContent = useColumnContent();
@@ -124,10 +130,7 @@ export function WebMobileColumn({
         </div>
 
         {open && (
-          <div
-            className={styles["mobile-column__content--values"]}
-            onClick={moreDetails}
-          >
+          <div className={styles["mobile-column__content--values"]}>
             {columns.slice(1).map((column) => (
               <React.Fragment key={column.name}>
                 <div
@@ -160,6 +163,72 @@ export function WebMobileColumn({
                 <div></div>
               </React.Fragment>
             ))}
+            {/*Actions*/}
+            <>
+              <div
+                className={styles["mobile-column__content--values__row--first"]}
+              >
+                <div
+                  className={
+                    styles[
+                      "mobile-column__content--values__row--first__simulation"
+                    ]
+                  }
+                ></div>
+                <span
+                  className={
+                    styles["mobile-column__content--left__column-name"]
+                  }
+                >
+                  Actions
+                </span>
+              </div>
+              <div className={styles["mobile-column__content--center"]}>
+                <div
+                  className={
+                    styles["table__content--table__head--label__actions"]
+                  }
+                >
+                  <Image
+                    className={
+                      styles["table__content--table__head--label__actions--img"]
+                    }
+                    src={"/components/table/eye.svg"}
+                    alt={"eye"}
+                    width={30}
+                    height={30}
+                    onClick={() => {
+                      if (viewAction) viewAction(content["id"]);
+                    }}
+                  />
+                  <Image
+                    className={
+                      styles["table__content--table__head--label__actions--img"]
+                    }
+                    src={"/components/table/pencil.svg"}
+                    alt={"edit"}
+                    width={18}
+                    height={18}
+                    onClick={() => {
+                      if (editAction) editAction(content["id"]);
+                    }}
+                  />
+                  <Image
+                    className={
+                      styles["table__content--table__head--label__actions--img"]
+                    }
+                    src={"/components/table/header/trash.svg"}
+                    alt={"delete"}
+                    width={30}
+                    height={30}
+                    onClick={() => {
+                      if (deleteAction) deleteAction(content["id"]);
+                    }}
+                  />
+                </div>
+              </div>
+              <div></div>
+            </>
           </div>
         )}
       </div>

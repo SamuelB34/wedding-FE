@@ -73,6 +73,15 @@ export default function Guests() {
         columns={columns}
         content={content}
         records={100}
+        viewAction={(id: string) => {
+          console.log(id);
+        }}
+        editAction={(id: string) => {
+          console.log(id);
+        }}
+        deleteAction={(id: string) => {
+          console.log(id);
+        }}
         refreshClick={() => {
           console.log("Refreshing");
         }}
