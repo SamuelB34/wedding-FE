@@ -22,7 +22,7 @@ interface Props {
   styles?: React.CSSProperties;
 }
 
-function WedButton({
+function WebButton({
   type = "button",
   style = "basic",
   height = "40px",
@@ -58,4 +58,4 @@ function WedButton({
   return <>{Button}</>;
 }
 
-export default WedButton;
+export default WebButton;

@@ -2,7 +2,7 @@
 import styles from "./web-table-header.module.scss";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import WedButton from "@/shared/components/wed-button/WedButton";
+import WebButton from "@/shared/components/wed-button/WebButton";
 import { WebChip } from "@/shared/components/web-chip/WebChip";
 import { numberFormat } from "@/shared/functions/format";
 import { useDebounce } from "@/shared/hooks/UseDebounce";
@@ -175,7 +175,7 @@ export function WebTableHeader({
             {sendButton && (
               <>
                 {!loading ? (
-                  <WedButton
+                  <WebButton
                     style={"outlined"}
                     type={"button"}
                     onClick={sendClick}
@@ -190,7 +190,7 @@ export function WebTableHeader({
                       />
                       Send Invitation
                     </span>
-                  </WedButton>
+                  </WebButton>
                 ) : (
                   <div className={styles["header__bottom--right-send-loading"]}>
                     <div className={styles["skeleton"]}></div>
@@ -200,7 +200,7 @@ export function WebTableHeader({
             )}
 
             {!loading ? (
-              <WedButton
+              <WebButton
                 style={"outlined"}
                 type={"button"}
                 onClick={deleteClick}
@@ -215,7 +215,7 @@ export function WebTableHeader({
                   />
                   Delete
                 </span>
-              </WedButton>
+              </WebButton>
             ) : (
               <div className={styles["header__bottom--right-delete-loading"]}>
                 <div className={styles["skeleton"]}></div>

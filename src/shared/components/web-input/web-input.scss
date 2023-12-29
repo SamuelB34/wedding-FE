@@ -1,0 +1,126 @@
+@import "src/shared/scss/_variables";
+
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 8px;
+  width: 100%;
+
+  &__container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    gap: 0;
+
+    &__tel {
+      display: flex;
+      align-items: center;
+      border-radius: 8px 0 0 8px;
+      border: transparent;
+      background: var(--neutral-200);
+      padding: 10px 16px;
+      border: 1px solid var(--neutral-600);
+      border-right: 0;
+      color: var(--neutral-600);
+      text-overflow: ellipsis;
+      font-family: "Open Sans", serif;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+    input {
+      color: var(--Gray, #666);
+      text-align: center;
+      font-family: Open Sans;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
+}
+
+.input {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid $--gray;
+  background: #fff;
+  // width: calc(100% - 40px);
+  overflow: hidden;
+  color: var(--dark, #222);
+  text-overflow: ellipsis;
+
+  font-family: "Open Sans", serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 8px 16px;
+
+  &:hover {
+    border: 1px solid $--primary-active;
+    transition: border-color 300ms;
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $--primary-active;
+    box-shadow: 0 4px 6px 0 $--primary;
+  }
+
+  &:read-only {
+    border: 1px solid #cccccc;
+    color: #cccccc;
+  }
+
+  transition: border-color 300ms;
+}
+
+.input__error-msg {
+  font-family: "Open Sans", serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: #c71b2c;
+  margin-top: 6px;
+  margin-left: 6px;
+}
+
+.error {
+  border: 1px solid #c71b2c;
+  color: #c71b2c;
+
+  &::placeholder {
+    color: #c71b2c;
+  }
+}
+
+.tel {
+  border-radius: 0 8px 8px 0 !important;
+}
+
+.select_type {
+  border-radius: 0 8px 8px 0 !important;
+}
+
+.disabled {
+  background: var(--general-greyscale-200, #e4e4e4) !important;
+  color: #696969 !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

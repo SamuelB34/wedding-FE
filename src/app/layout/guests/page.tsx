@@ -1,9 +1,19 @@
 "use client";
 import { ColumnTypes, WebTable } from "@/app/layout/_components/table/WebTable";
 import { WebModal } from "@/shared/components/web-modal/WebModal";
-import { useState } from "react";
-import { form_inputs } from "@/app/layout/guests/form-values";
+import { FormEvent, useEffect, useState } from "react";
+import {
+  form_inputs,
+  form_values,
+  input_requirements,
+  input_validations,
+} from "@/app/layout/guests/form-values";
 import styles from "./guests.module.scss";
+import WebButton from "@/shared/components/wed-button/WebButton";
+import WebInput from "@/shared/components/web-input/WebInput";
+import { onlyLetters } from "@/shared/functions/format";
+import { validations } from "@/shared/functions/validations";
+import { createGuest, getGuests } from "@/shared/services/guestsService";
 
 export default function Guests() {
   const columns: { name: string; label: string; type: ColumnTypes }[] = [
@@ -69,13 +79,40 @@ export default function Guests() {
     },
   ];
 
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [formValues, setFormValues] = useState<{ [key: string]: string }>({
+    ...form_values,
+  });
+  const [validate, setValidate] = useState<any>({ ...input_validations });
+
+  const submitForm = async (event: FormEvent) => {
+    event.preventDefault();
+    console.log(formValues);
+    const res = await createGuest(formValues);
+    if (res) {
+      setShowModal(false);
+    }
+  };
+
+  const getAllGuests = async () => {
+    const x = await getGuests();
+    console.log(x);
+  };
+
+  useEffect(() => {
+    getAllGuests();
+  }, []);
 
   return (
     <>
       {showModal && (
         <WebModal title={"Create Guest"} close={() => setShowModal(!showModal)}>
-          <form className={styles["form"]}>
+          <form
+            className={styles["form"]}
+            onSubmit={(event) => {
+              submitForm(event);
+            }}
+          >
             {form_inputs.map((input) => {
               if (input.type === "select") {
                 return (
@@ -92,11 +129,38 @@ export default function Guests() {
                     <label className={styles["form__input--label"]}>
                       {input.label}
                     </label>
-                    <input type={input.type} name={input.name} />
+                    <WebInput
+                      name={input.name}
+                      value={formValues[input.name]}
+                      error={validate[input.name].error}
+                      error_msg={validate[input.name].msg}
+                      onChange={(value: string) => {
+                        const text =
+                          input.type === "text"
+                            ? onlyLetters(value).slice(0, 50)
+                            : value;
+                        setFormValues({ ...formValues, [input.name]: text });
+                        setValidate({
+                          ...validate,
+                          [input.name]: {
+                            ...validations(
+                              { name: input.name, label: input.label },
+                              text,
+                              input_requirements,
+                            ),
+                            completed: !!text,
+                          },
+                        });
+                      }}
+                    />
                   </div>
                 );
               }
             })}
+
+            <WebButton type={"submit"} style={"basic"}>
+              <> Create </>
+            </WebButton>
           </form>
         </WebModal>
       )}

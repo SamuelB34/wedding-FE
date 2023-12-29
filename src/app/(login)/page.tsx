@@ -2,16 +2,33 @@
 import styles from "./page.module.scss";
 import { useState } from "react";
 import WedInput from "@/shared/components/wed-input/WedInput";
-import WedButton from "@/shared/components/wed-button/WedButton";
+import WebButton from "@/shared/components/wed-button/WebButton";
+import { login } from "@/shared/services/authService";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [loginForm, setLoginForm] = useState({
-    email_address: "",
+    username: "",
     password: "",
   });
-  const submit = (event: any) => {
+  const [loginLoading, setLoginLoading] = useState(false);
+
+  const router = useRouter();
+
+  const submit = async (event: any) => {
+    setLoginLoading(true);
     event.preventDefault();
-    console.log(loginForm);
+    try {
+      const res = await login(loginForm);
+      if (res.msg === "Success") {
+        localStorage.setItem("token", res.data.jwt);
+        router.push("/layout/guests");
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoginLoading(false);
+    }
   };
 
   return (
@@ -24,13 +41,13 @@ export default function Home() {
 
           {/*Email input*/}
           <div className={styles["container__content--form__input"]}>
-            <label>Email Address</label>
+            <label>Username</label>
             <WedInput
-              name={"email_address"}
+              name={"username"}
               onChange={(value: string) => {
                 setLoginForm({
                   ...loginForm,
-                  email_address: value,
+                  username: value,
                 });
               }}
             />
@@ -51,9 +68,9 @@ export default function Home() {
             />
           </div>
 
-          <WedButton type={"submit"} style={"basic"}>
+          <WebButton type={"submit"} style={"basic"} loading={loginLoading}>
             <>Log In</>
-          </WedButton>
+          </WebButton>
         </form>
       </div>
     </div>

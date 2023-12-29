@@ -5,3 +5,9 @@ export const phoneFormat = (phone: string) => {
 export const numberFormat = (number: number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
+export const onlyLetters = (text: string) => {
+  const pattern = /[^a-zA-Z\s'àáâãäåæçèéêëìíîïðñóôõöøùúûüýÿ'-]+/gu;
+  const replacement = "";
+  return text.replace(pattern, replacement);
+};
