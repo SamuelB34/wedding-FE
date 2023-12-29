@@ -49,6 +49,31 @@
       }
     }
 
+    &--buttons {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    &--create {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      border: 1px solid $--primary;
+      cursor: pointer;
+      background-color: $--primary;
+
+      &__img {
+        padding: 4px;
+      }
+
+      &:hover {
+        background-color: $--dark;
+        border: 1px solid $--dark;
+      }
+    }
+
     &--refresh {
       display: flex;
       justify-content: center;

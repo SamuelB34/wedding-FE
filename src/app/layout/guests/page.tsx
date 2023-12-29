@@ -1,5 +1,9 @@
 "use client";
 import { ColumnTypes, WebTable } from "@/app/layout/_components/table/WebTable";
+import { WebModal } from "@/shared/components/web-modal/WebModal";
+import { useState } from "react";
+import { form_inputs } from "@/app/layout/guests/form-values";
+import styles from "./guests.module.scss";
 
 export default function Guests() {
   const columns: { name: string; label: string; type: ColumnTypes }[] = [
@@ -65,14 +69,51 @@ export default function Guests() {
     },
   ];
 
+  const [showModal, setShowModal] = useState(true);
+
   return (
     <>
+      {showModal && (
+        <WebModal title={"Create Guest"} close={() => setShowModal(!showModal)}>
+          <form className={styles["form"]}>
+            {form_inputs.map((input) => {
+              if (input.type === "select") {
+                return (
+                  <div key={input.name} className={styles["form__input"]}>
+                    <label className={styles["form__input--label"]}>
+                      {input.label}
+                    </label>
+                    <select name={input.name}> {input.label} </select>
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={input.name} className={styles["form__input"]}>
+                    <label className={styles["form__input--label"]}>
+                      {input.label}
+                    </label>
+                    <input type={input.type} name={input.name} />
+                  </div>
+                );
+              }
+            })}
+          </form>
+        </WebModal>
+      )}
+
       <WebTable
+        title={"Guests"}
         loading={false}
         sendButton={true}
         columns={columns}
         content={content}
         records={100}
+        createClick={() => {
+          setShowModal(true);
+        }}
+        refreshClick={() => {
+          console.log("Refreshing");
+        }}
         viewAction={(id: string) => {
           console.log(id);
         }}
@@ -81,9 +122,6 @@ export default function Guests() {
         }}
         deleteAction={(id: string) => {
           console.log(id);
-        }}
-        refreshClick={() => {
-          console.log("Refreshing");
         }}
         sendClick={(columns) => {
           console.log(columns);

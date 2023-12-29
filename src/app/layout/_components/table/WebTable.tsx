@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 export type ColumnTypes = "text" | "email" | "phone" | "boolean";
 
 interface Props {
+  title: string;
   loading: boolean;
   sendButton?: boolean;
 
@@ -19,6 +20,7 @@ interface Props {
   sendClick?: (columns: any[]) => void;
   deleteClick?: (columns: any[]) => void;
   refreshClick?: () => void;
+  createClick?: () => void;
   viewClick?: (view: string) => void;
   searchFunction?: (view: string) => void;
   viewAction?: (id: string) => void;
@@ -27,6 +29,7 @@ interface Props {
 }
 
 export function WebTable({
+  title,
   loading = true,
   sendButton = false,
   records,
@@ -35,6 +38,7 @@ export function WebTable({
   sendClick,
   deleteClick,
   refreshClick,
+  createClick,
   viewClick,
   searchFunction,
   viewAction,
@@ -79,6 +83,8 @@ export function WebTable({
         <div className={styles["table__content"]}>
           {/*Header*/}
           <WebTableHeader
+            title={title}
+            createClick={createClick}
             sendButton={sendButton}
             records={records}
             loading={loading}

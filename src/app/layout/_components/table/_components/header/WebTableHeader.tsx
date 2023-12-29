@@ -8,6 +8,7 @@ import { numberFormat } from "@/shared/functions/format";
 import { useDebounce } from "@/shared/hooks/UseDebounce";
 
 interface Props {
+  title: string;
   loading: boolean;
   records: number;
   columnsSelected: any[];
@@ -15,18 +16,21 @@ interface Props {
   sendClick?: () => void;
   deleteClick?: () => void;
   refreshClick?: () => void;
+  createClick?: () => void;
   selectAll?: () => void;
   viewClick?: (view: string) => void;
   searchFunction?: (view: string) => void;
 }
 
 export function WebTableHeader({
+  title,
   loading = true,
   records,
   sendButton = false,
   sendClick,
   deleteClick,
   refreshClick,
+  createClick,
   viewClick,
   columnsSelected,
   searchFunction,
@@ -47,9 +51,7 @@ export function WebTableHeader({
           {/*TITLE*/}
           {!loading ? (
             <div className={styles["header__top--title-container"]}>
-              <span className={styles["header__top--title"]}>
-                Title Example
-              </span>
+              <span className={styles["header__top--title"]}>{title}</span>
 
               <span className={styles["header__top--count"]}>
                 {" "}
@@ -69,17 +71,32 @@ export function WebTableHeader({
 
           {/*Refresh button*/}
           {!loading ? (
-            <div
-              className={styles["header__top--refresh"]}
-              onClick={refreshClick}
-            >
-              <Image
-                className={styles["header__top--refresh__img"]}
-                src={"/components/table/refresh.svg"}
-                alt={"refresh"}
-                width="16"
-                height="16"
-              />
+            <div className={styles["header__top--buttons"]}>
+              <div
+                className={styles["header__top--refresh"]}
+                onClick={refreshClick}
+              >
+                <Image
+                  className={styles["header__top--refresh__img"]}
+                  src={"/components/table/refresh.svg"}
+                  alt={"refresh"}
+                  width="16"
+                  height="16"
+                />
+              </div>
+
+              <div
+                className={styles["header__top--create"]}
+                onClick={createClick}
+              >
+                <Image
+                  className={styles["header__top--create__img"]}
+                  src={"/components/table/header/plus.svg"}
+                  alt={"refresh"}
+                  width="24"
+                  height="24"
+                />
+              </div>
             </div>
           ) : (
             <div className={styles["header__top--refresh-loading"]}>
