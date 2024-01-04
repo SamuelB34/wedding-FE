@@ -6,14 +6,20 @@ import { ColumnTypes } from "@/app/layout/_components/table/WebTable";
 const useColumnContent = () => {
   const columnContent = (
     column_type: ColumnTypes,
-    value: string | boolean | number,
+    value: string | boolean | number | any,
     styles: any, // Agrega estilos como argumento si los necesitas
   ) => {
     switch (column_type) {
+      case "array":
+        return (
+          <span className={styles["table__content--table__body--row__value"]}>
+            {value.length ? value[0] : ""}
+          </span>
+        );
       case "text":
         return (
           <span className={styles["table__content--table__body--row__value"]}>
-            {value}
+            {value || ""}
           </span>
         );
       case "boolean":

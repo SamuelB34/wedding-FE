@@ -24,3 +24,8 @@ export const createGuest = async (body: any) => {
   const response = await serverApi.post("/guests", body);
   return response.data;
 };
+
+export const deleteGuest = async (id: string) => {
+  const response = await serverApi.delete(`/guests/${id}`);
+  return response.data;
+};

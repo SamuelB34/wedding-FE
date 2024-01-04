@@ -43,7 +43,7 @@ export function WebMobileColumn({
               type="checkbox"
               disabled={loading}
               onChange={() => {
-                onChange({ active: !selected, id: content["id"] });
+                onChange({ active: !selected, id: content["_id"] });
               }}
               checked={selected}
             />
@@ -198,7 +198,7 @@ export function WebMobileColumn({
                     width={30}
                     height={30}
                     onClick={() => {
-                      if (viewAction) viewAction(content["id"]);
+                      if (viewAction) viewAction(content["_id"]);
                     }}
                   />
                   <Image
@@ -210,7 +210,7 @@ export function WebMobileColumn({
                     width={18}
                     height={18}
                     onClick={() => {
-                      if (editAction) editAction(content["id"]);
+                      if (editAction) editAction(content["_id"]);
                     }}
                   />
                   <Image
@@ -222,7 +222,7 @@ export function WebMobileColumn({
                     width={30}
                     height={30}
                     onClick={() => {
-                      if (deleteAction) deleteAction(content["id"]);
+                      if (deleteAction) deleteAction(content["_id"]);
                     }}
                   />
                 </div>

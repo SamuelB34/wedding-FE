@@ -13,71 +13,25 @@ import WebButton from "@/shared/components/wed-button/WebButton";
 import WebInput from "@/shared/components/web-input/WebInput";
 import { onlyLetters } from "@/shared/functions/format";
 import { validations } from "@/shared/functions/validations";
-import { createGuest, getGuests } from "@/shared/services/guestsService";
+import {
+  createGuest,
+  deleteGuest,
+  getGuests,
+} from "@/shared/services/guestsService";
+import { GuestsColumns } from "@/app/layout/guests/columns.guests";
+import { WebToast } from "@/shared/components/web-toast/WebToast";
 
 export default function Guests() {
-  const columns: { name: string; label: string; type: ColumnTypes }[] = [
-    {
-      name: "name",
-      label: "Name",
-      type: "text",
-    },
-    {
-      name: "email",
-      label: "Email",
-      type: "email",
-    },
-    {
-      name: "phone_number",
-      label: "Phone number",
-      type: "phone",
-    },
-    {
-      name: "table",
-      label: "Table",
-      type: "text",
-    },
-    {
-      name: "group",
-      label: "Group",
-      type: "text",
-    },
-    {
-      name: "saw",
-      label: "Saw invitation",
-      type: "boolean",
-    },
-  ];
+  const [showToast, setShowToast] = useState<boolean>(false);
+  const [toastMsg, setToastMsg] = useState<string>("");
+  const [toastType, setToastType] = useState<"error" | "success">("error");
 
-  const content: any[] = [
-    {
-      id: 1,
-      name: "Samuel Barragan",
-      email: "samuel.barragan34@hotmail.com",
-      phone_number: "6865782380",
-      table: "1",
-      group: "Fam. Barragan",
-      saw: true,
-    },
-    {
-      id: 2,
-      name: "Melissa Araiza",
-      email: "melissa@hotmail.com",
-      phone_number: "6861161547",
-      table: "1",
-      group: "Fam. Barragan",
-      saw: false,
-    },
-    {
-      id: 3,
-      name: "Messi",
-      email: "messi_10@hotmail.com",
-      phone_number: "6861010101",
-      table: "10",
-      group: "World Cup Champions",
-      saw: true,
-    },
-  ];
+  const columns: { name: string; label: string; type: ColumnTypes }[] =
+    GuestsColumns;
+
+  // Table
+  const [tableLoading, setTableLoading] = useState(true);
+  const [tableContent, setTableContent] = useState<any[]>([]);
 
   const [showModal, setShowModal] = useState(false);
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({
@@ -87,16 +41,67 @@ export default function Guests() {
 
   const submitForm = async (event: FormEvent) => {
     event.preventDefault();
-    console.log(formValues);
-    const res = await createGuest(formValues);
-    if (res) {
-      setShowModal(false);
+    try {
+      const res = await createGuest(formValues);
+      if (res) {
+        setShowModal(false);
+        setToastType("success");
+        setToastMsg("Guest created successfully!");
+        setShowToast(true);
+        await getAllGuests();
+      }
+    } catch (e: any) {
+      const error = e.response.data.error;
+      setToastType("error");
+      setToastMsg(error);
+      setShowToast(true);
+    } finally {
+      setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
     }
   };
 
   const getAllGuests = async () => {
-    const x = await getGuests();
-    console.log(x);
+    setTableLoading(true);
+    try {
+      const res = await getGuests();
+      if (res.msg === "Success") {
+        setTableContent(res.data);
+      }
+    } catch (e: any) {
+      const error = e.response.data.error;
+      setToastType("error");
+      setToastMsg(error);
+      setShowToast(true);
+    } finally {
+      setTableLoading(false);
+    }
+  };
+
+  const deleteSingleGuest = async (id: string) => {
+    try {
+      const res = await deleteGuest(id);
+      if (res) {
+        setToastType("success");
+        setToastMsg("Guest deleted success");
+        setShowToast(true);
+        await getAllGuests();
+      }
+    } catch (e: any) {
+      const error = e.response.data.error;
+      setToastType("error");
+      setToastMsg(error);
+      setShowToast(true);
+    } finally {
+      setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
+    }
+  };
+
+  const closeToast = () => {
+    setShowToast(!showToast);
   };
 
   useEffect(() => {
@@ -137,7 +142,7 @@ export default function Guests() {
                       onChange={(value: string) => {
                         const text =
                           input.type === "text"
-                            ? onlyLetters(value).slice(0, 50)
+                            ? onlyLetters(value || "").slice(0, 50)
                             : value;
                         setFormValues({ ...formValues, [input.name]: text });
                         setValidate({
@@ -165,12 +170,16 @@ export default function Guests() {
         </WebModal>
       )}
 
+      {showToast && (
+        <WebToast type={toastType} msg={toastMsg} close={closeToast} />
+      )}
+
       <WebTable
         title={"Guests"}
-        loading={false}
+        loading={tableLoading}
         sendButton={true}
         columns={columns}
-        content={content}
+        content={tableContent}
         records={100}
         createClick={() => {
           setShowModal(true);
@@ -184,8 +193,8 @@ export default function Guests() {
         editAction={(id: string) => {
           console.log(id);
         }}
-        deleteAction={(id: string) => {
-          console.log(id);
+        deleteAction={async (id: string) => {
+          await deleteSingleGuest(id);
         }}
         sendClick={(columns) => {
           console.log(columns);

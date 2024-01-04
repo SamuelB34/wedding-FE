@@ -1,0 +1,56 @@
+.toast {
+  &-container {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 350px;
+  }
+
+  &-success {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+
+    border-radius: 4px;
+    border: 1px solid var(--Cool-Grey-Cool-Grey-02-Main, #dbffee);
+    background: var(--Black-Black-80, #dbffee);
+
+    &__label {
+      color: #007212;
+      font-family: Inter, sans-serif;
+      font-weight: 600;
+    }
+
+    &__x {
+      filter: brightness(0) saturate(100%) invert(25%) sepia(89%)
+        saturate(1054%) hue-rotate(100deg) brightness(97%) contrast(105%);
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+  }
+
+  &-error {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+
+    border-radius: 4px;
+    border: 1px solid var(--Cool-Grey-Cool-Grey-02-Main, #ffd1d5);
+    background: var(--Black-Black-80, #ffd1d5);
+
+    &__label {
+      color: #c71b2c;
+      font-family: Inter, sans-serif;
+      font-weight: 600;
+    }
+    &__x {
+      filter: brightness(0) saturate(100%) invert(20%) sepia(88%)
+        saturate(4032%) hue-rotate(344deg) brightness(79%) contrast(96%);
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+  }
+}

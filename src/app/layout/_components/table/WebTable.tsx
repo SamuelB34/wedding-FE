@@ -2,12 +2,10 @@ import styles from "./web-table.module.scss";
 import Image from "next/image";
 import { WebTableHeader } from "@/app/layout/_components/table/_components/header/WebTableHeader";
 import { WebMobileColumn } from "@/app/layout/_components/table/_components/mobile-column/WebMobileColumn";
-import { WebChip } from "@/shared/components/web-chip/WebChip";
-import { phoneFormat } from "@/shared/functions/format";
 import useColumnContent from "@/shared/hooks/UseColumnContent";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export type ColumnTypes = "text" | "email" | "phone" | "boolean";
+export type ColumnTypes = "text" | "email" | "phone" | "boolean" | "array";
 
 interface Props {
   title: string;
@@ -68,7 +66,7 @@ export function WebTable({
       let columns: any[] = [];
       content.map((item) => {
         console.log();
-        columns.push(item["id"].toString());
+        columns.push(item["_id"].toString());
       });
       setColumnsSelected(columns);
     } else {
@@ -113,11 +111,7 @@ export function WebTable({
                 // No loading
                 <tr>
                   <th>
-                    <input
-                      type="checkbox"
-                      onChange={selectAll}
-                      checked={columnSelected}
-                    />
+                    <input type="checkbox" onChange={selectAll} />
                   </th>
                   {columns.map((column) => (
                     <th
@@ -158,11 +152,11 @@ export function WebTable({
             {/*Body*/}
             <tbody className={styles["table__content--table__body"]}>
               {/*Map columns */}
-              {!loading ? (
+              {!loading && content.length ? (
                 <>
                   {content.map((item) => (
                     <tr
-                      key={item.id}
+                      key={item["_id"]}
                       className={styles["table__content--table__body--row"]}
                     >
                       <td
@@ -173,18 +167,20 @@ export function WebTable({
                         <input
                           type="checkbox"
                           onChange={() => {
-                            selectColumn(item["id"].toString());
+                            selectColumn(item["_id"].toString());
                           }}
-                          checked={columnsSelected.some(
-                            (value) => value === item["id"].toString(),
-                          )}
+                          checked={
+                            columnsSelected.some(
+                              (value) => value === item["_id"].toString(),
+                            ) || false
+                          }
                         />
                       </td>
                       {columns.map((column) => (
                         <td key={column.name}>
                           {columnContent(
                             column.type,
-                            item[column.name],
+                            item[column.name] || "",
                             styles,
                           )}
                         </td>
@@ -210,7 +206,7 @@ export function WebTable({
                             width={24}
                             height={24}
                             onClick={() => {
-                              if (viewAction) viewAction(item["id"]);
+                              if (viewAction) viewAction(item["_id"]);
                             }}
                           />
                           <Image
@@ -224,7 +220,7 @@ export function WebTable({
                             width={16}
                             height={16}
                             onClick={() => {
-                              if (editAction) editAction(item["id"]);
+                              if (editAction) editAction(item["_id"]);
                             }}
                           />
                           <Image
@@ -238,7 +234,7 @@ export function WebTable({
                             width={24}
                             height={24}
                             onClick={() => {
-                              if (deleteAction) deleteAction(item["id"]);
+                              if (deleteAction) deleteAction(item["_id"]);
                             }}
                           />
                         </div>
@@ -289,11 +285,11 @@ export function WebTable({
           </table>
 
           {/*Mobile Table */}
-          {!loading ? (
+          {!loading && content.length ? (
             <>
               {content.map((item) => (
                 <div
-                  key={item.id}
+                  key={item["_id"]}
                   className={styles["table__content--table-mobile"]}
                 >
                   <WebMobileColumn
@@ -301,7 +297,7 @@ export function WebTable({
                     content={item}
                     loading={loading}
                     selected={columnsSelected.some(
-                      (value) => value === item["id"].toString(),
+                      (value) => value === item["_id"].toString(),
                     )}
                     onChange={(value) => {
                       selectColumn(value.id.toString());
