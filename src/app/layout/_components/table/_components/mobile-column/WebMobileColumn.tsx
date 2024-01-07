@@ -13,7 +13,7 @@ interface Props {
   selected: boolean;
   onChange: (value: { active: boolean; id: string }) => void;
   viewAction?: (id: string) => void;
-  editAction?: (id: string) => void;
+  editAction?: (id: any) => void;
   deleteAction?: (id: string) => void;
 }
 
@@ -29,6 +29,13 @@ export function WebMobileColumn({
 }: Props) {
   const [open, setOpen] = useState(false);
   const columnContent = useColumnContent();
+
+  const checkActions = (item: any) => {
+    return (
+      localStorage.getItem("role") === "admin" ||
+      localStorage.getItem("id") === item["created_by"]
+    );
+  };
 
   const moreDetails = () => {
     if (!loading) setOpen(!open);
@@ -203,26 +210,36 @@ export function WebMobileColumn({
                   />
                   <Image
                     className={
-                      styles["table__content--table__head--label__actions--img"]
+                      styles[
+                        checkActions(content)
+                          ? "table__content--table__head--label__actions--img"
+                          : "table__content--table__head--label__actions--img-disabled"
+                      ]
                     }
                     src={"/components/table/pencil.svg"}
                     alt={"edit"}
                     width={18}
                     height={18}
                     onClick={() => {
-                      if (editAction) editAction(content["_id"]);
+                      if (editAction && checkActions(content))
+                        editAction(content);
                     }}
                   />
                   <Image
                     className={
-                      styles["table__content--table__head--label__actions--img"]
+                      styles[
+                        checkActions(content)
+                          ? "table__content--table__head--label__actions--img"
+                          : "table__content--table__head--label__actions--img-disabled"
+                      ]
                     }
                     src={"/components/table/header/trash.svg"}
                     alt={"delete"}
                     width={30}
                     height={30}
                     onClick={() => {
-                      if (deleteAction) deleteAction(content["_id"]);
+                      if (deleteAction && checkActions(content))
+                        deleteAction(content["_id"]);
                     }}
                   />
                 </div>
