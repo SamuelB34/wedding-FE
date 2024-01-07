@@ -36,3 +36,9 @@ yarn-error.log*
 next-env.d.ts
 
 .vscode
+
+
+# amplify
+node_modules
+.amplify
+amplifyconfiguration*
