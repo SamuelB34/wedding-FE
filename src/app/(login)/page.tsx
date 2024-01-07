@@ -3,7 +3,7 @@ import styles from "./page.module.scss";
 import { useState } from "react";
 import WedInput from "@/shared/components/wed-input/WedInput";
 import WebButton from "@/shared/components/wed-button/WebButton";
-import { login } from "@/shared/services/authService";
+import { login, verifyToken } from "@/shared/services/authService";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -22,6 +22,7 @@ export default function Home() {
       const res = await login(loginForm);
       if (res.msg === "Success") {
         localStorage.setItem("token", res.data.jwt);
+        verifyToken(res.data.jwt);
         router.push("/layout/guests");
       }
     } catch (e) {
