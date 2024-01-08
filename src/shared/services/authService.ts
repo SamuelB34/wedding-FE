@@ -7,17 +7,8 @@ const serverApi = axios.create({
 });
 
 export const verifyToken = (token: string) => {
-  const decoded: {
-    user_id: string;
-    user_name: string;
-    user_role: string;
-    iat: number;
-    exp: number;
-  } = jwt.decode(token);
-  if (decoded) {
-    localStorage.setItem("id", decoded.user_id);
-    localStorage.setItem("role", decoded.user_role);
-  }
+  const decoded = jwt.decode(token);
+  console.log(decoded);
 };
 
 export const login = async (data: { username: string; password: string }) => {

@@ -17,7 +17,6 @@ import {
   createGuest,
   deleteGuest,
   getGuests,
-  updateGuest,
 } from "@/shared/services/guestsService";
 import { GuestsColumns } from "@/app/layout/guests/columns.guests";
 import { WebToast } from "@/shared/components/web-toast/WebToast";
@@ -35,11 +34,9 @@ export default function Guests() {
   const [tableContent, setTableContent] = useState<any[]>([]);
 
   const [showModal, setShowModal] = useState(false);
-  const [editModal, setEditModal] = useState(false);
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({
     ...form_values,
   });
-  const [id, setId] = useState("");
   const [validate, setValidate] = useState<any>({ ...input_validations });
 
   const submitForm = async (event: FormEvent) => {
@@ -59,50 +56,10 @@ export default function Guests() {
       setToastMsg(error);
       setShowToast(true);
     } finally {
-      setEditModal(false);
-      formatForm();
       setTimeout(() => {
         setShowToast(false);
       }, 3000);
     }
-  };
-
-  const updateForm = async (event: FormEvent, id: string) => {
-    event.preventDefault();
-    try {
-      const res = await updateGuest(id, formValues);
-      if (res) {
-        setShowModal(false);
-        setToastType("success");
-        setToastMsg("Guest created successfully!");
-        setShowToast(true);
-        await getAllGuests();
-      }
-    } catch (e: any) {
-      const error = e.response.data.error;
-      setToastType("error");
-      setToastMsg(error);
-      setShowToast(true);
-    } finally {
-      setEditModal(false);
-      formatForm();
-      setTimeout(() => {
-        setShowToast(false);
-      }, 3000);
-    }
-  };
-
-  const formatForm = () => {
-    const keys = Object.keys(formValues);
-
-    let value = {
-      ...formValues,
-    };
-
-    for (const key of keys) {
-      value[key] = "";
-    }
-    setFormValues(value);
   };
 
   const getAllGuests = async () => {
@@ -147,21 +104,6 @@ export default function Guests() {
     setShowToast(!showToast);
   };
 
-  const openModal = (data: any) => {
-    const keys = Object.keys(formValues);
-
-    let value = {
-      ...formValues,
-    };
-    for (const key of keys) {
-      value[key] = data[key];
-    }
-
-    setEditModal(true);
-    setFormValues(value);
-    setShowModal(true);
-  };
-
   useEffect(() => {
     getAllGuests();
   }, []);
@@ -173,7 +115,7 @@ export default function Guests() {
           <form
             className={styles["form"]}
             onSubmit={(event) => {
-              editModal ? updateForm(event, id) : submitForm(event);
+              submitForm(event);
             }}
           >
             {form_inputs.map((input) => {
@@ -222,7 +164,7 @@ export default function Guests() {
             })}
 
             <WebButton type={"submit"} style={"basic"}>
-              <> {editModal ? "Edit" : "Create"} </>
+              <> Create </>
             </WebButton>
           </form>
         </WebModal>
@@ -241,7 +183,6 @@ export default function Guests() {
         records={100}
         createClick={() => {
           setShowModal(true);
-          setEditModal(false);
         }}
         refreshClick={() => {
           console.log("Refreshing");
@@ -249,9 +190,8 @@ export default function Guests() {
         viewAction={(id: string) => {
           console.log(id);
         }}
-        editAction={(data: any) => {
-          openModal(data);
-          setId(data["_id"]);
+        editAction={(id: string) => {
+          console.log(id);
         }}
         deleteAction={async (id: string) => {
           await deleteSingleGuest(id);

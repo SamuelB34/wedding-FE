@@ -22,7 +22,7 @@ interface Props {
   viewClick?: (view: string) => void;
   searchFunction?: (view: string) => void;
   viewAction?: (id: string) => void;
-  editAction?: (content: any) => void;
+  editAction?: (id: string) => void;
   deleteAction?: (id: string) => void;
 }
 
@@ -73,13 +73,6 @@ export function WebTable({
       setColumnsSelected([]);
     }
     setColumnSelected(!columnSelected);
-  };
-
-  const checkActions = (item: any) => {
-    return (
-      localStorage.getItem("role") === "admin" ||
-      localStorage.getItem("id") === item["created_by"]
-    );
   };
 
   return (
@@ -219,9 +212,7 @@ export function WebTable({
                           <Image
                             className={
                               styles[
-                                checkActions(item)
-                                  ? "table__content--table__head--label__actions--img"
-                                  : "table__content--table__head--label__actions--img-disabled"
+                                "table__content--table__head--label__actions--img"
                               ]
                             }
                             src={"/components/table/pencil.svg"}
@@ -229,16 +220,13 @@ export function WebTable({
                             width={16}
                             height={16}
                             onClick={() => {
-                              if (editAction && checkActions(item))
-                                editAction(item);
+                              if (editAction) editAction(item["_id"]);
                             }}
                           />
                           <Image
                             className={
                               styles[
-                                checkActions(item)
-                                  ? "table__content--table__head--label__actions--img"
-                                  : "table__content--table__head--label__actions--img-disabled"
+                                "table__content--table__head--label__actions--img"
                               ]
                             }
                             src={"/components/table/header/trash.svg"}
@@ -246,8 +234,7 @@ export function WebTable({
                             width={24}
                             height={24}
                             onClick={() => {
-                              if (deleteAction && checkActions(item))
-                                deleteAction(item["_id"]);
+                              if (deleteAction) deleteAction(item["_id"]);
                             }}
                           />
                         </div>
@@ -318,7 +305,7 @@ export function WebTable({
                     viewAction={(id: string) => {
                       if (viewAction) viewAction(id);
                     }}
-                    editAction={(id: any) => {
+                    editAction={(id: string) => {
                       if (editAction) editAction(id);
                     }}
                     deleteAction={(id: string) => {
