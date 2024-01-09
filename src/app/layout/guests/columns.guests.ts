@@ -6,18 +6,8 @@ export const GuestsColumns: {
   type: ColumnTypes;
 }[] = [
   {
-    name: "first_name",
-    label: "First Name",
-    type: "text",
-  },
-  {
-    name: "middle_name",
-    label: "Middle Name",
-    type: "text",
-  },
-  {
-    name: "last_name",
-    label: "Last Name",
+    name: "name",
+    label: "Name",
     type: "text",
   },
   {

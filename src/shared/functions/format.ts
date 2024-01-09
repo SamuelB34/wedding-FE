@@ -11,3 +11,13 @@ export const onlyLetters = (text: string) => {
   const replacement = "";
   return text.replace(pattern, replacement);
 };
+
+export const cutLongWords = (text: string) => {
+  let word = text;
+
+  if (word.length >= 15) {
+    word = word.slice(0, 15) + "...";
+  }
+
+  return word;
+};

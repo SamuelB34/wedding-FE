@@ -112,7 +112,15 @@ export default function Guests() {
     try {
       const res = await getGuests();
       if (res.msg === "Success") {
-        setTableContent(res.data);
+        const data = res.data.map((value: any) => {
+          return {
+            ...value,
+            name: `${value.first_name} ${
+              value.middle_name ? `${value.middle_name} ` : ""
+            }${value.last_name}`,
+          };
+        });
+        setTableContent(data);
       }
     } catch (e: any) {
       const error = e.response.data.error;
@@ -244,7 +252,7 @@ export default function Guests() {
         sendButton={true}
         columns={columns}
         content={tableContent}
-        records={100}
+        records={tableContent.length}
         createClick={() => {
           setShowModal(true);
           setEditModal(false);

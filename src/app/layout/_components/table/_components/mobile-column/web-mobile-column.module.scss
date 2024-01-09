@@ -59,8 +59,15 @@
     &--center {
       display: flex;
       align-items: center;
+      max-width: 100%;
+      overflow: hidden;
+
       &__value {
         font-family: Inter, sans-serif;
+        text-overflow: ellipsis;
+        word-break: keep-all;
+        overflow: hidden;
+        white-space: nowrap;
 
         &-loading {
           width: 130px;

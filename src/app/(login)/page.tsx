@@ -46,7 +46,8 @@ export default function Home() {
       if (res.msg === "Success") {
         await localStorage.setItem("token", res.data.jwt);
         const verify = verifyToken(res.data.jwt);
-        if (verify.status === "Succeed") router.push("/layout/guests");
+        const user = await getUserById(verify.id);
+        if (verify.status === "Succeed" && user) router.push("/layout/guests");
       }
     } catch (e: any) {
       setShowToast(true);
