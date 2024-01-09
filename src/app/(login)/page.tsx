@@ -1,10 +1,11 @@
 "use client";
 import styles from "./page.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WedInput from "@/shared/components/wed-input/WedInput";
 import WebButton from "@/shared/components/wed-button/WebButton";
-import { login, verifyToken } from "@/shared/services/authService";
+import { getUserById, login, verifyToken } from "@/shared/services/authService";
 import { useRouter } from "next/navigation";
+import { WebToast } from "@/shared/components/web-toast/WebToast";
 
 export default function Home() {
   const [loginForm, setLoginForm] = useState({
@@ -12,8 +13,30 @@ export default function Home() {
     password: "",
   });
   const [loginLoading, setLoginLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
 
   const router = useRouter();
+
+  useEffect(() => {
+    const id = localStorage.getItem("token");
+
+    if (id) {
+      const verify = verifyToken(id);
+
+      if (verify.status === "Succeed") {
+        console.log("BYE");
+        router.push("/layout/guests");
+      } else {
+        console.log("HELLO");
+        localStorage.clear();
+      }
+    }
+  }, []);
+
+  const closeToast = () => {
+    setShowToast(!showToast);
+  };
 
   const submit = async (event: any) => {
     setLoginLoading(true);
@@ -21,24 +44,41 @@ export default function Home() {
     try {
       const res = await login(loginForm);
       if (res.msg === "Success") {
-        localStorage.setItem("token", res.data.jwt);
-        verifyToken(res.data.jwt);
-        router.push("/layout/guests");
+        await localStorage.setItem("token", res.data.jwt);
+        const verify = verifyToken(res.data.jwt);
+        if (verify.status === "Succeed") router.push("/layout/guests");
       }
-    } catch (e) {
+    } catch (e: any) {
+      setShowToast(true);
+      setToastMsg(e?.response?.data?.error || "Server Error");
+      closeAutomaticToast();
       console.log(e);
     } finally {
       setLoginLoading(false);
     }
   };
 
+  const closeAutomaticToast = () => {
+    setTimeout(() => {
+      setShowToast(false);
+    }, 4000);
+  };
+
   return (
     <div className={styles["container"]}>
+      {showToast && (
+        <WebToast type={"error"} msg={toastMsg} close={closeToast} />
+      )}
+
       <div className={styles["container__content"]}>
         <form className={styles["container__content--form"]} onSubmit={submit}>
-          <h1>Welcome back!</h1>
+          <h1 className={styles["container__content--form__title"]}>
+            Welcome back!
+          </h1>
 
-          <span>Log in to your account</span>
+          <span className={styles["container__content--form__label"]}>
+            Log in to your account
+          </span>
 
           {/*Email input*/}
           <div className={styles["container__content--form__input"]}>

@@ -3,7 +3,6 @@
 
 .body-container {
   width: 100%;
-  overflow: hidden;
 }
 
 .container {
@@ -79,6 +78,33 @@
         align-items: center;
         gap: 8px;
         cursor: pointer;
+        position: relative;
+
+        &__menu {
+          @include mobile {
+            display: none;
+          }
+          position: absolute;
+          bottom: -70px;
+          left: 0;
+          width: 100%;
+          &--content {
+            padding: 16px;
+            &__logout {
+              padding: 8px;
+              color: $--primary;
+              font-family: Inter, sans-serif;
+              font-size: 14px;
+              font-weight: 600;
+              width: 100%;
+
+              &:hover {
+                background-color: $--primary;
+                color: #fff;
+              }
+            }
+          }
+        }
       }
 
       &__letter {
@@ -130,7 +156,7 @@
     &__content {
       padding: 32px;
       display: flex;
-      height: calc(100% - 64px);
+      height: calc(100vh - 64px);
       flex-direction: column;
       justify-content: space-between;
 
@@ -183,6 +209,7 @@
           display: flex;
           align-items: center;
           gap: 8px;
+          cursor: pointer;
 
           &--text {
             color: $--dark-gray;

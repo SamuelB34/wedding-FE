@@ -21,6 +21,7 @@ import {
 } from "@/shared/services/guestsService";
 import { GuestsColumns } from "@/app/layout/guests/columns.guests";
 import { WebToast } from "@/shared/components/web-toast/WebToast";
+import { useRouter } from "next/navigation";
 
 export default function Guests() {
   const [showToast, setShowToast] = useState<boolean>(false);
@@ -33,6 +34,7 @@ export default function Guests() {
   // Table
   const [tableLoading, setTableLoading] = useState(true);
   const [tableContent, setTableContent] = useState<any[]>([]);
+  const router = useRouter();
 
   const [showModal, setShowModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -114,6 +116,10 @@ export default function Guests() {
       }
     } catch (e: any) {
       const error = e.response.data.error;
+      if (e && e.response.status === 401) {
+        localStorage.clear();
+        router.push("/");
+      }
       setToastType("error");
       setToastMsg(error);
       setShowToast(true);
