@@ -234,6 +234,13 @@ export default function Guests() {
                       value={formValues[input.name]}
                       error={validate[input.name].error}
                       error_msg={validate[input.name].msg}
+                      input_mode={
+                        input.type === "phone"
+                          ? "tel"
+                          : input.type === "email"
+                            ? "email"
+                            : "text"
+                      }
                       onChange={(value: string) => {
                         const text =
                           input.type === "text"
