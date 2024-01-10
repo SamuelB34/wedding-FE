@@ -1,11 +1,11 @@
 "use client";
 import styles from "./page.module.scss";
 import { useEffect, useState } from "react";
-import WedInput from "@/shared/components/wed-input/WedInput";
 import WebButton from "@/shared/components/wed-button/WebButton";
 import { getUserById, login, verifyToken } from "@/shared/services/authService";
 import { useRouter } from "next/navigation";
 import { WebToast } from "@/shared/components/web-toast/WebToast";
+import WebInput from "@/shared/components/web-input/WebInput";
 
 export default function Home() {
   const [loginForm, setLoginForm] = useState({
@@ -88,7 +88,7 @@ export default function Home() {
           {/*Email input*/}
           <div className={styles["container__content--form__input"]}>
             <label>Username</label>
-            <WedInput
+            <WebInput
               name={"username"}
               onChange={(value: string) => {
                 setLoginForm({
@@ -102,7 +102,7 @@ export default function Home() {
           {/*Password input*/}
           <div className={styles["container__content--form__input"]}>
             <label>Password</label>
-            <WedInput
+            <WebInput
               name={"email_address"}
               type={"password"}
               onChange={(value: string) => {

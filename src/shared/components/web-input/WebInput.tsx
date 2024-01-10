@@ -5,7 +5,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 interface Props {
   name: string;
   id?: string;
-  type?: "text" | "number" | "date" | "email";
+  type?: "text" | "number" | "date" | "email" | "password";
   input_mode?:
     | "text"
     | "email"

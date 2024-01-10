@@ -86,6 +86,14 @@ export function WebHeader() {
                 onClick={() => {
                   setAccountMenu(!accountMenu);
                 }}
+                style={{
+                  backgroundColor:
+                    user === "Melissa Araiza"
+                      ? "#dfb2ff"
+                      : user === "Samuel Barragan"
+                        ? "#5d5d5d"
+                        : "#0066ff",
+                }}
               >
                 <span className={styles["container__content--user__letter"]}>
                   {user.charAt(0)}
