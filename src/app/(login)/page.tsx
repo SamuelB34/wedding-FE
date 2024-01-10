@@ -52,6 +52,10 @@ export default function Home() {
     } catch (e: any) {
       setShowToast(true);
       setToastMsg(e?.response?.data?.error || "Server Error");
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       closeAutomaticToast();
       console.log(e);
     } finally {
