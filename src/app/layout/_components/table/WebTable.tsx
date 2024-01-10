@@ -166,101 +166,116 @@ export function WebTable({
             {/*Body*/}
             <tbody className={styles["table__content--table__body"]}>
               {/*Map columns */}
-              {!loading && content.length ? (
+              {!loading ? (
                 <>
-                  {content.map((item) => (
-                    <tr
-                      key={item["_id"]}
-                      className={styles["table__content--table__body--row"]}
-                    >
-                      <td
-                        className={
-                          styles["table__content--table__body--row__checkbox"]
-                        }
+                  {content.length ? (
+                    content.map((item) => (
+                      <tr
+                        key={item["_id"]}
+                        className={styles["table__content--table__body--row"]}
                       >
-                        <input
-                          type="checkbox"
-                          onChange={() => {
-                            selectColumn(item["_id"].toString());
-                          }}
-                          checked={
-                            columnsSelected.some(
-                              (value) => value === item["_id"].toString(),
-                            ) || false
-                          }
-                        />
-                      </td>
-                      {columns.map((column) => (
-                        <td key={column.name}>
-                          {columnContent(
-                            column.type,
-                            item[column.name] || "",
-                            styles,
-                          )}
-                        </td>
-                      ))}
-                      <td
-                        className={styles["table__content--table__head--label"]}
-                      >
-                        <div
+                        <td
                           className={
-                            styles[
-                              "table__content--table__head--label__actions"
-                            ]
+                            styles["table__content--table__body--row__checkbox"]
                           }
                         >
-                          <Image
+                          <input
+                            type="checkbox"
+                            onChange={() => {
+                              selectColumn(item["_id"].toString());
+                            }}
+                            checked={
+                              columnsSelected.some(
+                                (value) => value === item["_id"].toString(),
+                              ) || false
+                            }
+                          />
+                        </td>
+                        {columns.map((column) => (
+                          <td key={column.name}>
+                            {columnContent(
+                              column.type,
+                              item[column.name] || "",
+                              styles,
+                            )}
+                          </td>
+                        ))}
+                        <td
+                          className={
+                            styles["table__content--table__head--label"]
+                          }
+                        >
+                          <div
                             className={
                               styles[
-                                "table__content--table__head--label__actions--img"
+                                "table__content--table__head--label__actions"
                               ]
                             }
-                            src={"/components/table/eye.svg"}
-                            alt={"eye"}
-                            width={24}
-                            height={24}
-                            onClick={() => {
-                              if (viewAction) viewAction(item["_id"]);
-                            }}
-                          />
-                          <Image
-                            className={
-                              styles[
-                                checkActions(item)
-                                  ? "table__content--table__head--label__actions--img"
-                                  : "table__content--table__head--label__actions--img-disabled"
-                              ]
-                            }
-                            src={"/components/table/pencil.svg"}
-                            alt={"edit"}
-                            width={16}
-                            height={16}
-                            onClick={() => {
-                              if (editAction && checkActions(item))
-                                editAction(item);
-                            }}
-                          />
-                          <Image
-                            className={
-                              styles[
-                                checkActions(item)
-                                  ? "table__content--table__head--label__actions--img"
-                                  : "table__content--table__head--label__actions--img-disabled"
-                              ]
-                            }
-                            src={"/components/table/header/trash.svg"}
-                            alt={"delete"}
-                            width={24}
-                            height={24}
-                            onClick={() => {
-                              if (deleteAction && checkActions(item))
-                                deleteAction(item["_id"]);
-                            }}
-                          />
-                        </div>
+                          >
+                            <Image
+                              className={
+                                styles[
+                                  "table__content--table__head--label__actions--img"
+                                ]
+                              }
+                              src={"/components/table/eye.svg"}
+                              alt={"eye"}
+                              width={24}
+                              height={24}
+                              onClick={() => {
+                                if (viewAction) viewAction(item["_id"]);
+                              }}
+                            />
+                            <Image
+                              className={
+                                styles[
+                                  checkActions(item)
+                                    ? "table__content--table__head--label__actions--img"
+                                    : "table__content--table__head--label__actions--img-disabled"
+                                ]
+                              }
+                              src={"/components/table/pencil.svg"}
+                              alt={"edit"}
+                              width={16}
+                              height={16}
+                              onClick={() => {
+                                if (editAction && checkActions(item))
+                                  editAction(item);
+                              }}
+                            />
+                            <Image
+                              className={
+                                styles[
+                                  checkActions(item)
+                                    ? "table__content--table__head--label__actions--img"
+                                    : "table__content--table__head--label__actions--img-disabled"
+                                ]
+                              }
+                              src={"/components/table/header/trash.svg"}
+                              alt={"delete"}
+                              width={24}
+                              height={24}
+                              onClick={() => {
+                                if (deleteAction && checkActions(item))
+                                  deleteAction(item["_id"]);
+                              }}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan={columns.length + 2}
+                        className={
+                          styles["table__content--table__body--no-records"]
+                        }
+                      >
+                        No records found
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </>
               ) : (
                 <>
@@ -305,35 +320,45 @@ export function WebTable({
           </table>
 
           {/*Mobile Table */}
-          {!loading && content.length ? (
+          {!loading ? (
             <>
-              {content.map((item) => (
-                <div
-                  key={item["_id"]}
-                  className={styles["table__content--table-mobile"]}
+              {content.length ? (
+                content.map((item) => (
+                  <div
+                    key={item["_id"]}
+                    className={styles["table__content--table-mobile"]}
+                  >
+                    <WebMobileColumn
+                      columns={columns}
+                      content={item}
+                      loading={loading}
+                      selected={columnsSelected.some(
+                        (value) => value === item["_id"].toString(),
+                      )}
+                      onChange={(value) => {
+                        selectColumn(value.id.toString());
+                      }}
+                      viewAction={(id: string) => {
+                        if (viewAction) viewAction(id);
+                      }}
+                      editAction={(id: any) => {
+                        if (editAction) editAction(id);
+                      }}
+                      deleteAction={(id: string) => {
+                        if (deleteAction) deleteAction(id);
+                      }}
+                    />
+                  </div>
+                ))
+              ) : (
+                <span
+                  className={
+                    styles["table__content--table__body--no-records-2"]
+                  }
                 >
-                  <WebMobileColumn
-                    columns={columns}
-                    content={item}
-                    loading={loading}
-                    selected={columnsSelected.some(
-                      (value) => value === item["_id"].toString(),
-                    )}
-                    onChange={(value) => {
-                      selectColumn(value.id.toString());
-                    }}
-                    viewAction={(id: string) => {
-                      if (viewAction) viewAction(id);
-                    }}
-                    editAction={(id: any) => {
-                      if (editAction) editAction(id);
-                    }}
-                    deleteAction={(id: string) => {
-                      if (deleteAction) deleteAction(id);
-                    }}
-                  />
-                </div>
-              ))}
+                  No records found
+                </span>
+              )}
             </>
           ) : (
             <>
@@ -354,7 +379,7 @@ export function WebTable({
             </>
           )}
 
-          {!loading && (
+          {!loading && records > 0 && (
             <WebTablePagination
               p={p}
               pp={10}

@@ -361,6 +361,7 @@ export default function Guests() {
               search: search,
             });
             setTableSearch(search);
+            setTableP(1);
           } else {
             await getAllGuests();
           }
