@@ -61,6 +61,18 @@
     }
   }
 
+  &-dark-blue {
+    background-color: #8ebaff;
+    border: 1px solid #8ebaff;
+
+    &__label {
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: #fff;
+      padding: 2px 6px;
+    }
+  }
+
   &-purple {
     background-color: #f7dfff;
     border: 1px solid #f7dfff;

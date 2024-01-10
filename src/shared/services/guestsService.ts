@@ -22,8 +22,14 @@ export const getGuests = async (params?: {
   return response.data;
 };
 
-export const getTotalCount = async (search?: string) => {
-  const config = search ? { params: { search: search } } : undefined;
+export const getTotalCount = async (search?: string, filter?: string) => {
+  let config: any = search ? { params: { search: search } } : undefined;
+
+  if (config && filter) {
+    config = { params: { search: search, filter: filter } };
+  } else if (!config && filter) {
+    config = { params: { filter: filter } };
+  }
 
   const response = await serverApi.get("/guests/total-count", config);
   return response.data;

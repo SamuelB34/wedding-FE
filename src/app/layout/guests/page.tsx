@@ -55,6 +55,7 @@ export default function Guests() {
     p: number;
     pp: number;
     search?: string;
+    filter?: string;
   }) => {
     if (params && params.search?.length) {
       setTableLoadingNoHeader(true);
@@ -77,7 +78,7 @@ export default function Guests() {
         });
         setTableContent(data);
 
-        const res_count = await getTotalCount(params?.search);
+        const res_count = await getTotalCount(params?.search, params?.filter);
         setTableCount(res_count.data.total_count);
       }
     } catch (e: any) {
@@ -333,8 +334,12 @@ export default function Guests() {
         refreshClick={async () => {
           await getAllGuests();
         }}
-        viewAction={(id: string) => {
-          console.log(id);
+        viewAction={async (id: string) => {
+          await getAllGuests({
+            p: 1,
+            pp: 10,
+            filter: id,
+          });
         }}
         editAction={(data: any) => {
           openModal(data);
@@ -350,8 +355,13 @@ export default function Guests() {
         deleteClick={(columns) => {
           console.log(columns);
         }}
-        viewClick={(view) => {
-          console.log(view);
+        viewClick={async (view) => {
+          await getAllGuests({
+            p: 1,
+            pp: 10,
+            filter: view,
+          });
+          setTableP(1);
         }}
         searchFunction={async (search) => {
           if (search.length) {
@@ -364,6 +374,7 @@ export default function Guests() {
             setTableP(1);
           } else {
             await getAllGuests();
+            setTableSearch("");
           }
         }}
         paginationAction={async (page: number) => {

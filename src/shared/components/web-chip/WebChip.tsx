@@ -9,6 +9,7 @@ interface Props {
     | "green"
     | "dark-green"
     | "blue"
+    | "dark-blue"
     | "purple"
     | "gray"
     | "outlined";
@@ -29,7 +30,13 @@ export function WebChip({
         if (onClick) onClick(event);
       }}
     >
-      <span className={`${styles[`chip-${color}__label`]}`}> {text} </span>
+      <span
+        className={`${styles[`chip-${color}__label`]}`}
+        style={{ whiteSpace: "nowrap" }}
+      >
+        {" "}
+        {text}{" "}
+      </span>
     </div>
   );
 }

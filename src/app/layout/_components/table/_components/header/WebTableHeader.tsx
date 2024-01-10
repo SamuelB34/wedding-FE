@@ -36,8 +36,15 @@ export function WebTableHeader({
   searchFunction,
   selectAll,
 }: Props) {
-  const [views] = useState([{ name: "all", label: "All" }]);
+  const [views] = useState([
+    { name: "all", label: "All" },
+    { name: "barragan.m", label: "Fam. Barragan" },
+    { name: "araiza.s", label: "Fam. Araiza" },
+    { name: "admins", label: "Fiancés" },
+  ]);
   const [value, setValue] = useState<string>("");
+  const [viewSelected, setViewSelected] = useState<string>("all");
+
   const debouncedValue = useDebounce<string>(value, 800);
 
   useEffect(() => {
@@ -142,18 +149,21 @@ export function WebTableHeader({
               <>
                 <div className={styles["header__bottom--views"]}>
                   <span className={styles["header__bottom--views__label"]}>
-                    View:
+                    Created by:
                   </span>
 
                   {/*TODO Add chips on next map*/}
                   {views.map((view) => {
                     return (
                       <WebChip
-                        color={"blue"}
+                        color={
+                          view.name === viewSelected ? "dark-blue" : "blue"
+                        }
                         text={view.label}
                         key={view.name}
                         onClick={() => {
                           if (viewClick) viewClick(view.name);
+                          setViewSelected(view.name);
                         }}
                       />
                     );
