@@ -8,8 +8,24 @@ const serverApi = axios.create({
   },
 });
 
-export const getGuests = async () => {
-  const response = await serverApi.get("/guests");
+export const getGuests = async (params?: {
+  p: number;
+  pp: number;
+  search?: string;
+}) => {
+  const body = params || {
+    p: 1,
+    pp: 30,
+  };
+
+  const response = await serverApi.get("/guests", { params: body });
+  return response.data;
+};
+
+export const getTotalCount = async (search?: string) => {
+  const config = search ? { params: { search: search } } : undefined;
+
+  const response = await serverApi.get("/guests/total-count", config);
   return response.data;
 };
 

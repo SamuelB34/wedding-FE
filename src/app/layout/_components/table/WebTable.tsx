@@ -4,14 +4,17 @@ import { WebTableHeader } from "@/app/layout/_components/table/_components/heade
 import { WebMobileColumn } from "@/app/layout/_components/table/_components/mobile-column/WebMobileColumn";
 import useColumnContent from "@/shared/hooks/UseColumnContent";
 import { useState } from "react";
+import { WebTablePagination } from "@/app/layout/_components/table/_components/pagination/WebTablePagination";
 
 export type ColumnTypes = "text" | "email" | "phone" | "boolean" | "array";
 
 interface Props {
   title: string;
   loading: boolean;
+  loadingNoHeader: boolean;
   sendButton?: boolean;
 
+  p: number;
   records: number;
   columns: { name: string; label: string; type: ColumnTypes }[];
   content: any[];
@@ -24,12 +27,15 @@ interface Props {
   viewAction?: (id: string) => void;
   editAction?: (content: any) => void;
   deleteAction?: (id: string) => void;
+  paginationAction?: (page: number) => void;
 }
 
 export function WebTable({
   title,
   loading = true,
+  loadingNoHeader = false,
   sendButton = false,
+  p,
   records,
   columns,
   content,
@@ -42,6 +48,7 @@ export function WebTable({
   viewAction,
   editAction,
   deleteAction,
+  paginationAction,
 }: Props) {
   const columnContent = useColumnContent();
   const [columnSelected, setColumnSelected] = useState<boolean>(false);
@@ -92,7 +99,7 @@ export function WebTable({
             createClick={createClick}
             sendButton={sendButton}
             records={records}
-            loading={loading}
+            loading={loadingNoHeader ? false : loading}
             columnsSelected={columnsSelected}
             deleteClick={() => {
               if (deleteClick) deleteClick(columnsSelected);
@@ -345,6 +352,20 @@ export function WebTable({
                 </div>
               ))}
             </>
+          )}
+
+          {!loading && (
+            <WebTablePagination
+              p={p}
+              pp={30}
+              total_count={records}
+              prevClick={(page: number) => {
+                if (paginationAction) paginationAction(page);
+              }}
+              nextClick={(page: number) => {
+                if (paginationAction) paginationAction(page);
+              }}
+            />
           )}
         </div>
       </div>

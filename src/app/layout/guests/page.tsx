@@ -17,6 +17,7 @@ import {
   createGuest,
   deleteGuest,
   getGuests,
+  getTotalCount,
   updateGuest,
 } from "@/shared/services/guestsService";
 import { GuestsColumns } from "@/app/layout/guests/columns.guests";
@@ -32,8 +33,12 @@ export default function Guests() {
     GuestsColumns;
 
   // Table
+  const [tableLoadingNoHeader, setTableLoadingNoHeader] = useState(false);
   const [tableLoading, setTableLoading] = useState(true);
+  const [tableCount, setTableCount] = useState(0);
+  const [tableP, setTableP] = useState(1);
   const [tableContent, setTableContent] = useState<any[]>([]);
+  const [tableSearch, setTableSearch] = useState<string>("");
   const router = useRouter();
 
   const [showModal, setShowModal] = useState(false);
@@ -43,6 +48,53 @@ export default function Guests() {
   });
   const [id, setId] = useState("");
   const [validate, setValidate] = useState<any>({ ...input_validations });
+
+  const getAllGuests = async (params?: {
+    p: number;
+    pp: number;
+    search?: string;
+  }) => {
+    if (params && params.search?.length) {
+      setTableLoadingNoHeader(true);
+      setTableLoading(true);
+    } else {
+      setTableLoadingNoHeader(false);
+      setTableLoading(true);
+    }
+    try {
+      const res = await getGuests(params);
+      if (res.msg === "Success") {
+        const data = res.data.map((value: any) => {
+          return {
+            ...value,
+            name: `${value.first_name} ${
+              value.middle_name ? `${value.middle_name} ` : ""
+            }${value.last_name}`,
+          };
+        });
+        setTableContent(data);
+
+        const res_count = await getTotalCount(params?.search);
+        setTableCount(res_count.data.total_count);
+      }
+    } catch (e: any) {
+      const error = e.response.data.error;
+      if (e && e.response.status === 401) {
+        localStorage.clear();
+        router.push("/");
+      }
+      setToastType("error");
+      setToastMsg(error);
+      setShowToast(true);
+    } finally {
+      if (params && params.search?.length) {
+        setTableLoadingNoHeader(false);
+        setTableLoading(false);
+      } else {
+        setTableLoading(false);
+      }
+    }
+  };
 
   const submitForm = async (event: FormEvent) => {
     event.preventDefault();
@@ -105,35 +157,6 @@ export default function Guests() {
       value[key] = "";
     }
     setFormValues(value);
-  };
-
-  const getAllGuests = async () => {
-    setTableLoading(true);
-    try {
-      const res = await getGuests();
-      if (res.msg === "Success") {
-        const data = res.data.map((value: any) => {
-          return {
-            ...value,
-            name: `${value.first_name} ${
-              value.middle_name ? `${value.middle_name} ` : ""
-            }${value.last_name}`,
-          };
-        });
-        setTableContent(data);
-      }
-    } catch (e: any) {
-      const error = e.response.data.error;
-      if (e && e.response.status === 401) {
-        localStorage.clear();
-        router.push("/");
-      }
-      setToastType("error");
-      setToastMsg(error);
-      setShowToast(true);
-    } finally {
-      setTableLoading(false);
-    }
   };
 
   const deleteSingleGuest = async (id: string) => {
@@ -248,11 +271,13 @@ export default function Guests() {
 
       <WebTable
         title={"Guests"}
+        p={tableP}
         loading={tableLoading}
+        loadingNoHeader={tableLoadingNoHeader}
         sendButton={true}
         columns={columns}
         content={tableContent}
-        records={tableContent.length}
+        records={tableCount}
         createClick={() => {
           setShowModal(true);
           setEditModal(false);
@@ -279,8 +304,25 @@ export default function Guests() {
         viewClick={(view) => {
           console.log(view);
         }}
-        searchFunction={(search) => {
-          console.log(search);
+        searchFunction={async (search) => {
+          if (search.length) {
+            await getAllGuests({
+              p: 1,
+              pp: 30,
+              search: search,
+            });
+            setTableSearch(search);
+          } else {
+            await getAllGuests();
+          }
+        }}
+        paginationAction={async (page: number) => {
+          await getAllGuests({
+            p: page,
+            pp: 30,
+            search: tableSearch.length ? tableSearch : undefined,
+          });
+          setTableP(page);
         }}
       />
     </>

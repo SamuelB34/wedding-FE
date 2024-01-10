@@ -121,7 +121,7 @@ export function WebTableHeader({
 
                   <input
                     type="text"
-                    placeholder={"Search"}
+                    placeholder={"Search by name"}
                     className={
                       styles["header__bottom--search__container--input"]
                     }
