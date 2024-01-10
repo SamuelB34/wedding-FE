@@ -24,9 +24,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-left: 16px;
-      padding-right: 6px;
-      padding-bottom: 16px;
+      padding: 16px 6px 16px 16px;
 
       &__title {
         font-family: Inter, sans-serif;

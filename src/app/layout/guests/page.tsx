@@ -42,6 +42,8 @@ export default function Guests() {
   const router = useRouter();
 
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
   const [editModal, setEditModal] = useState(false);
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({
     ...form_values,
@@ -70,6 +72,7 @@ export default function Guests() {
             name: `${value.first_name} ${
               value.middle_name ? `${value.middle_name} ` : ""
             }${value.last_name}`,
+            created_by_name: value.created_by["username"],
           };
         });
         setTableContent(data);
@@ -177,6 +180,8 @@ export default function Guests() {
       setTimeout(() => {
         setShowToast(false);
       }, 3000);
+      setDeleteId("");
+      setShowDeleteModal(false);
     }
   };
 
@@ -272,6 +277,42 @@ export default function Guests() {
         </WebModal>
       )}
 
+      {showDeleteModal && (
+        <WebModal
+          title={"Delete Guest"}
+          close={() => setShowDeleteModal(!showDeleteModal)}
+        >
+          <div className={styles["delete-modal"]}>
+            <span className={styles["delete-modal__txt"]}>
+              Are you sure you want to delete this guest? <br /> This action
+              cannot be <b>undone</b>
+            </span>
+
+            <div className={styles["delete-modal__buttons"]}>
+              <WebButton
+                type={"button"}
+                style={"outlined"}
+                onClick={() => {
+                  setDeleteId("");
+                  setShowDeleteModal(false);
+                }}
+              >
+                <>Cancel</>
+              </WebButton>
+              <WebButton
+                type={"button"}
+                style={"basic"}
+                onClick={async () => {
+                  await deleteSingleGuest(deleteId);
+                }}
+              >
+                <>Delete</>
+              </WebButton>
+            </div>
+          </div>
+        </WebModal>
+      )}
+
       {showToast && (
         <WebToast type={toastType} msg={toastMsg} close={closeToast} />
       )}
@@ -289,8 +330,8 @@ export default function Guests() {
           setShowModal(true);
           setEditModal(false);
         }}
-        refreshClick={() => {
-          console.log("Refreshing");
+        refreshClick={async () => {
+          await getAllGuests();
         }}
         viewAction={(id: string) => {
           console.log(id);
@@ -300,7 +341,8 @@ export default function Guests() {
           setId(data["_id"]);
         }}
         deleteAction={async (id: string) => {
-          await deleteSingleGuest(id);
+          setDeleteId(id);
+          setShowDeleteModal(true);
         }}
         sendClick={(columns) => {
           console.log(columns);

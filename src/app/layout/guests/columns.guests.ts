@@ -31,6 +31,11 @@ export const GuestsColumns: {
     type: "array",
   },
   {
+    name: "created_by_name",
+    label: "Created by",
+    type: "text",
+  },
+  {
     name: "saw_invitation",
     label: "Saw invitation",
     type: "boolean",

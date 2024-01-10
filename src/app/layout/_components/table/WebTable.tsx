@@ -85,7 +85,7 @@ export function WebTable({
   const checkActions = (item: any) => {
     return (
       localStorage.getItem("role") === "admin" ||
-      localStorage.getItem("id") === item["created_by"]
+      localStorage.getItem("id") === item["created_by"]._id
     );
   };
 
