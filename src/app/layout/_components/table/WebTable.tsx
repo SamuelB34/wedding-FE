@@ -357,7 +357,7 @@ export function WebTable({
           {!loading && (
             <WebTablePagination
               p={p}
-              pp={30}
+              pp={10}
               total_count={records}
               prevClick={(page: number) => {
                 if (paginationAction) paginationAction(page);

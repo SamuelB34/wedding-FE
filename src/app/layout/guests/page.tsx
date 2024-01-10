@@ -357,7 +357,7 @@ export default function Guests() {
           if (search.length) {
             await getAllGuests({
               p: 1,
-              pp: 30,
+              pp: 10,
               search: search,
             });
             setTableSearch(search);
@@ -368,7 +368,7 @@ export default function Guests() {
         paginationAction={async (page: number) => {
           await getAllGuests({
             p: page,
-            pp: 30,
+            pp: 10,
             search: tableSearch.length ? tableSearch : undefined,
           });
           setTableP(page);

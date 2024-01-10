@@ -15,7 +15,7 @@ export const getGuests = async (params?: {
 }) => {
   const body = params || {
     p: 1,
-    pp: 30,
+    pp: 10,
   };
 
   const response = await serverApi.get("/guests", { params: body });

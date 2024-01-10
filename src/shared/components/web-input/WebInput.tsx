@@ -91,7 +91,7 @@ export const WebInput = ({
       <div className={"body__container"}>
         {input_mode === "tel" && (
           <div className={"body__container__tel"}>
-            <span>+1</span>
+            <span>+52</span>
           </div>
         )}
         <input
