@@ -39,6 +39,7 @@ export default function Guests() {
   const [tableP, setTableP] = useState(1);
   const [tableContent, setTableContent] = useState<any[]>([]);
   const [tableSearch, setTableSearch] = useState<string>("");
+  const [tableView, setTableView] = useState<string | undefined>(undefined);
   const router = useRouter();
 
   const [showModal, setShowModal] = useState(false);
@@ -340,6 +341,7 @@ export default function Guests() {
             pp: 10,
             filter: id,
           });
+          console.log(id);
         }}
         editAction={(data: any) => {
           openModal(data);
@@ -349,8 +351,14 @@ export default function Guests() {
           setDeleteId(id);
           setShowDeleteModal(true);
         }}
-        sendClick={(columns) => {
+        sendClick={async (columns) => {
           console.log(columns);
+          try {
+            // const res = await sendWhatsApp();
+            // console.log(res);
+          } catch (e) {
+            console.log(e);
+          }
         }}
         deleteClick={(columns) => {
           console.log(columns);
@@ -361,6 +369,7 @@ export default function Guests() {
             pp: 10,
             filter: view,
           });
+          setTableView(view);
           setTableP(1);
         }}
         searchFunction={async (search) => {
@@ -369,6 +378,7 @@ export default function Guests() {
               p: 1,
               pp: 10,
               search: search,
+              filter: tableView,
             });
             setTableSearch(search);
             setTableP(1);
@@ -382,6 +392,7 @@ export default function Guests() {
             p: page,
             pp: 10,
             search: tableSearch.length ? tableSearch : undefined,
+            filter: tableView,
           });
           setTableP(page);
         }}

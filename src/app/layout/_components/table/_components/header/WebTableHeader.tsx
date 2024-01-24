@@ -37,10 +37,27 @@ export function WebTableHeader({
   selectAll,
 }: Props) {
   const [views] = useState([
-    { name: "all", label: "All" },
-    { name: "barragan.m", label: "Fam. Barragan" },
-    { name: "araiza.s", label: "Fam. Araiza" },
-    { name: "admins", label: "Fiancés" },
+    {
+      name: [
+        "659a14f1f429caac82b1f61a",
+        "659c4ca18854328da35719c4",
+        "659c4d788854328da35719cc",
+        "659c4d528854328da35719c8",
+        "659c4de08854328da35719d0",
+        "659c4dfc8854328da35719d4",
+      ].toString(),
+      label: "All",
+    },
+    {
+      name: ["659c4d788854328da35719cc", "659c4d528854328da35719c8"].toString(),
+      label: "Fam. Barragan",
+    },
+    {
+      name: ["659c4de08854328da35719d0", "659c4dfc8854328da35719d4"].toString(),
+      label: "Fam. Araiza",
+    },
+    { name: "659c4ca18854328da35719c4", label: "Melissa" },
+    { name: "659a14f1f429caac82b1f61a", label: "Samuel" },
   ]);
   const [value, setValue] = useState<string>("");
   const [viewSelected, setViewSelected] = useState<string>("all");
