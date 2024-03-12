@@ -81,6 +81,9 @@
       }
 
       &__body {
+        td {
+          max-width: 300px;
+        }
         &--row {
           &:nth-child(odd) {
             background-color: $--primary-light;
@@ -95,6 +98,8 @@
             width: 20px;
           }
 
+          table-layout: fixed;
+
           &__value {
             padding: 8px;
             font-size: 14px;
@@ -102,6 +107,11 @@
             font-family: Inter, sans-serif;
             border-left: 1px solid $--light;
             text-align: center;
+            width: 20px;
+            //text-overflow: ellipsis;
+            //word-break: keep-all;
+            //overflow: hidden;
+            //white-space: nowrap;
           }
 
           &__value-content {

@@ -13,6 +13,7 @@ interface Props {
   records: number;
   columnsSelected: any[];
   sendButton?: boolean;
+  showViews?: boolean;
   sendClick?: () => void;
   deleteClick?: () => void;
   refreshClick?: () => void;
@@ -35,6 +36,7 @@ export function WebTableHeader({
   columnsSelected,
   searchFunction,
   selectAll,
+  showViews = true,
 }: Props) {
   const [views] = useState([
     {
@@ -164,31 +166,35 @@ export function WebTableHeader({
             {/*Views*/}
             {!loading ? (
               <>
-                <div className={styles["header__bottom--views"]}>
-                  <span className={styles["header__bottom--views__label"]}>
-                    Created by:
-                  </span>
+                {showViews && (
+                  <>
+                    <div className={styles["header__bottom--views"]}>
+                      <span className={styles["header__bottom--views__label"]}>
+                        Created by:
+                      </span>
 
-                  {/*TODO Add chips on next map*/}
-                  {views.map((view) => {
-                    return (
-                      <WebChip
-                        color={
-                          view.name === viewSelected ? "dark-blue" : "blue"
-                        }
-                        text={view.label}
-                        key={view.name}
-                        onClick={() => {
-                          if (viewClick) viewClick(view.name);
-                          setViewSelected(view.name);
-                        }}
-                      />
-                    );
-                  })}
-                </div>
-                <span className={styles["select-all"]} onClick={selectAll}>
-                  Select All
-                </span>
+                      {/*TODO Add chips on next map*/}
+                      {views.map((view) => {
+                        return (
+                          <WebChip
+                            color={
+                              view.name === viewSelected ? "dark-blue" : "blue"
+                            }
+                            text={view.label}
+                            key={view.name}
+                            onClick={() => {
+                              if (viewClick) viewClick(view.name);
+                              setViewSelected(view.name);
+                            }}
+                          />
+                        );
+                      })}
+                    </div>
+                    <span className={styles["select-all"]} onClick={selectAll}>
+                      Select All
+                    </span>
+                  </>
+                )}
               </>
             ) : (
               <div className={styles["header__bottom--views-loading"]}>

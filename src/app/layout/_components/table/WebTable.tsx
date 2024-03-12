@@ -6,12 +6,19 @@ import useColumnContent from "@/shared/hooks/UseColumnContent";
 import { useState } from "react";
 import { WebTablePagination } from "@/app/layout/_components/table/_components/pagination/WebTablePagination";
 
-export type ColumnTypes = "text" | "email" | "phone" | "boolean" | "array";
+export type ColumnTypes =
+  | "text"
+  | "email"
+  | "phone"
+  | "boolean"
+  | "array"
+  | "array-2";
 
 interface Props {
   title: string;
   loading: boolean;
   loadingNoHeader: boolean;
+  showViews: boolean;
   sendButton?: boolean;
 
   p: number;
@@ -33,6 +40,7 @@ interface Props {
 export function WebTable({
   title,
   loading = true,
+  showViews = true,
   loadingNoHeader = false,
   sendButton = false,
   p,
@@ -99,6 +107,7 @@ export function WebTable({
             createClick={createClick}
             sendButton={sendButton}
             records={records}
+            showViews={showViews}
             loading={loadingNoHeader ? false : loading}
             columnsSelected={columnsSelected}
             deleteClick={() => {

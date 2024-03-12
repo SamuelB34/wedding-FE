@@ -325,6 +325,7 @@ export default function Guests() {
         loading={tableLoading}
         loadingNoHeader={tableLoadingNoHeader}
         sendButton={true}
+        showViews={true}
         columns={columns}
         content={tableContent}
         records={tableCount}

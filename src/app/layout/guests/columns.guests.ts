@@ -28,7 +28,7 @@ export const GuestsColumns: {
   {
     name: "group",
     label: "Group",
-    type: "array",
+    type: "text",
   },
   {
     name: "created_by_name",

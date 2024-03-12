@@ -4,6 +4,14 @@ import { WebChip } from "@/shared/components/web-chip/WebChip";
 import { ColumnTypes } from "@/app/layout/_components/table/WebTable";
 
 const useColumnContent = () => {
+  const cutWords = (text: string, maxLength: number) => {
+    if (text.length <= maxLength) {
+      return text;
+    } else {
+      return text.substring(0, maxLength - 3) + "...";
+    }
+  };
+
   const columnContent = (
     column_type: ColumnTypes,
     value: string | boolean | number | any,
@@ -14,6 +22,14 @@ const useColumnContent = () => {
         return (
           <span className={styles["table__content--table__body--row__value"]}>
             {value.length ? value[0] : ""}
+          </span>
+        );
+      case "array-2":
+        return (
+          <span className={styles["table__content--table__body--row__value"]}>
+            {value.length
+              ? cutWords(value.toString().replaceAll(",", ", "), 60)
+              : ""}
           </span>
         );
       case "text":
