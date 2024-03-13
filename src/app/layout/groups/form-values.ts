@@ -1,7 +1,7 @@
 export const form_inputs = [
   {
     label: "*Name",
-    name: "first_name",
+    name: "name",
     type: "text",
   },
   {
@@ -20,80 +20,50 @@ export const input_requirements: {
     exact_length?: number;
   };
 } = {
-  first_name: {
+  name: {
     min_length: 2,
     required: true,
   },
-  middle_name: {
-    min_length: 2,
-    required: false,
-  },
-  last_name: {
-    min_length: 2,
-    required: true,
-  },
-  email_address: {
-    is_email: true,
-    required: true,
-  },
-  phone_number: {
-    is_phone: true,
-    required: true,
-  },
-  group: {
-    min_length: 2,
-    required: false,
-  },
-  table: {
-    min_length: 2,
+  guests: {
     required: false,
   },
 };
 
 export const form_values = {
-  first_name: "",
-  middle_name: "",
-  last_name: "",
-  email_address: "",
-  phone_number: "",
-  group: "",
-  table: "",
+  name: "",
+  guests: [],
 };
 
 export const input_validations = {
-  first_name: {
+  name: {
     error: false,
     msg: "",
     completed: false,
   },
-  middle_name: {
-    error: false,
-    msg: "",
-    completed: true,
-  },
-  last_name: {
-    error: false,
-    msg: "",
-    completed: false,
-  },
-  email_address: {
-    error: false,
-    msg: "",
-    completed: false,
-  },
-  phone_number: {
-    error: false,
-    msg: "",
-    completed: false,
-  },
-  group: {
-    error: false,
-    msg: "",
-    completed: true,
-  },
-  table: {
+  guests: {
     error: false,
     msg: "",
     completed: true,
   },
 };
+
+export interface ColourOption {
+  readonly value: string;
+  readonly label: string;
+  readonly color: string;
+  readonly isFixed?: boolean;
+  readonly isDisabled?: boolean;
+}
+
+export const colourOptions: readonly ColourOption[] = [
+  { value: "ocean", label: "Ocean", color: "#00B8D9", isFixed: true },
+  { value: "blue", label: "Blue", color: "#0052CC", isDisabled: true },
+  { value: "purple", label: "Purple", color: "#5243AA" },
+  { value: "red", label: "Red", color: "#FF5630", isFixed: true },
+  { value: "orange", label: "Orange", color: "#FF8B00" },
+  { value: "yellow", label: "Yellow", color: "#FFC400" },
+  { value: "green", label: "Green", color: "#36B37E" },
+  { value: "forest", label: "Forest", color: "#00875A" },
+  { value: "slate", label: "Slate", color: "#253858" },
+  { value: "silver", label: "Silver", color: "#666666" },
+];

@@ -56,8 +56,6 @@ export const getTotalCount = async (search?: string, filter?: string) => {
     };
   }
 
-  console.log(config);
-
   const response = await serverApi.get("/guests/total-count", config);
   return response.data;
 };

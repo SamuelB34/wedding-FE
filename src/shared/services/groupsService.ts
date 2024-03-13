@@ -24,6 +24,15 @@ export const getGroups = async (params?: {
   return response.data;
 };
 
+export const getGroupById = async (id: string) => {
+  const response = await serverApi.get("/groups/" + id, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  return response.data;
+};
+
 export const getTotalCountGroups = async (search?: string) => {
   let config: any = search ? { params: { search: search } } : undefined;
 
@@ -42,20 +51,11 @@ export const getTotalCountGroups = async (search?: string) => {
     };
   }
 
-  console.log(config);
-
   const response = await serverApi.get("/groups/total-count", config);
   return response.data;
 };
 
 export const createGroup = async (body: any) => {
-  body = Object.assign({ ...body, assist: false, saw_invitation: false });
-  if (!body.table || !body.table.length) {
-    delete body.table;
-  }
-  if (!body.group || !body.group.length) {
-    delete body.group;
-  }
   const response = await serverApi.post("/groups", body, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
@@ -65,13 +65,6 @@ export const createGroup = async (body: any) => {
 };
 
 export const updateGroup = async (id: string, body: any) => {
-  body = Object.assign({ ...body, assist: false, saw_invitation: false });
-  if (!body.table || !body.table.length) {
-    delete body.table;
-  }
-  if (!body.group || !body.group.length) {
-    delete body.group;
-  }
   const response = await serverApi.put(`/groups/${id}`, body, {
     headers: {
       Authorization: `Bearer ${getToken()}`,

@@ -3,6 +3,7 @@ import { ColumnTypes, WebTable } from "@/app/layout/_components/table/WebTable";
 import { WebModal } from "@/shared/components/web-modal/WebModal";
 import { FormEvent, useEffect, useState } from "react";
 import {
+  colourOptions,
   form_inputs,
   form_values,
   input_requirements,
@@ -13,22 +14,21 @@ import WebButton from "@/shared/components/wed-button/WebButton";
 import WebInput from "@/shared/components/web-input/WebInput";
 import { onlyLetters } from "@/shared/functions/format";
 import { validations } from "@/shared/functions/validations";
-import {
-  createGuest,
-  deleteGuest,
-  updateGuest,
-} from "@/shared/services/guestsService";
+import { getGuests } from "@/shared/services/guestsService";
 import { WebToast } from "@/shared/components/web-toast/WebToast";
 import { useRouter } from "next/navigation";
 import { GroupsColumns } from "@/app/layout/groups/columns.groups";
 import {
   createGroup,
   deleteGroup,
+  getGroupById,
   getGroups,
   getTotalCountGroups,
   updateGroup,
 } from "@/shared/services/groupsService";
 import LpSelect2 from "@/shared/components/web-select-2/lp-select2";
+import { useDebounce } from "@/shared/hooks/UseDebounce";
+import Select from "react-select/base";
 
 export default function Guests() {
   const [showToast, setShowToast] = useState<boolean>(false);
@@ -52,10 +52,18 @@ export default function Guests() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState("");
   const [editModal, setEditModal] = useState(false);
-  const [formValues, setFormValues] = useState<{ [key: string]: string }>({
+  const [formValues, setFormValues] = useState<{ [key: string]: any }>({
     ...form_values,
   });
   const [id, setId] = useState("");
+  const [searchGuest, setSearchGuest] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [guestsList, setGuestsList] = useState<
+    { label: string; value: string }[]
+  >([]);
+  const [selectedGuests, setSelectedGuests] = useState<
+    { label: string; value: string }[]
+  >([]);
   const [validate, setValidate] = useState<any>({ ...input_validations });
 
   const getAllGroups = async (params?: {
@@ -107,6 +115,11 @@ export default function Guests() {
         setToastType("success");
         setToastMsg("Guest created successfully!");
         setShowToast(true);
+        setSelectedGuests([]);
+        setFormValues({
+          ...formValues,
+          ["guest"]: [],
+        });
         await getAllGroups();
       }
     } catch (e: any) {
@@ -132,6 +145,11 @@ export default function Guests() {
         setToastType("success");
         setToastMsg("Guest created successfully!");
         setShowToast(true);
+        setSelectedGuests([]);
+        setFormValues({
+          ...formValues,
+          ["guest"]: [],
+        });
         await getAllGroups();
       }
     } catch (e: any) {
@@ -188,6 +206,37 @@ export default function Guests() {
     setShowToast(!showToast);
   };
 
+  const getGuestsList = async (search: string) => {
+    try {
+      let guests = await getGuests({ p: 1, pp: 20, search: search });
+      const list = guests.data.map((guest: any) => {
+        return {
+          label: guest.full_name,
+          value: guest._id,
+        };
+      });
+      setGuestsList(list);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getGrpById = async (id: string) => {
+    try {
+      const res = await getGroupById(id);
+      if (res) {
+        const data = res.data;
+        setSelectedGuests([...data.guests]);
+        setFormValues({
+          name: data.name,
+          guests: data.guests.map((select: any) => {
+            return select.value;
+          }),
+        });
+      }
+    } catch (e) {}
+  };
+
   const openModal = (data: any) => {
     const keys = Object.keys(formValues);
 
@@ -206,6 +255,12 @@ export default function Guests() {
   useEffect(() => {
     getAllGroups();
   }, []);
+
+  const debouncedValue = useDebounce<string>(searchGuest, 800);
+
+  useEffect(() => {
+    getGuestsList(debouncedValue);
+  }, [debouncedValue]);
 
   return (
     <>
@@ -229,10 +284,46 @@ export default function Guests() {
                     </label>
                     <LpSelect2
                       name={"guests"}
-                      onChange={() => {}}
-                      options={[]}
-                      onClickOption={() => {}}
-                      showSuggetions={false}
+                      options={guestsList}
+                      options_selected={selectedGuests}
+                      onFocus={() => {
+                        setShowSuggestions(true);
+                      }}
+                      onBlur={() => setShowSuggestions(false)}
+                      onChange={(value) => {
+                        setSearchGuest(value);
+                      }}
+                      onClickOption={(opt) => {
+                        const selected = [...selectedGuests];
+                        const index = selected.findIndex((select) => {
+                          return opt === select;
+                        });
+                        if (index === -1) {
+                          selected.push(opt);
+                          setSelectedGuests([...selected]);
+                          setFormValues({
+                            ...formValues,
+                            [input.name]: selected.map((select) => {
+                              return select.value;
+                            }),
+                          });
+                        }
+                      }}
+                      showSuggetions={showSuggestions}
+                      onClickRecord={(record) => {
+                        const selected = [...selectedGuests];
+                        const index = selected.findIndex((select) => {
+                          return record === select;
+                        });
+                        selected.splice(index, 1);
+                        setSelectedGuests([...selected]);
+                        setFormValues({
+                          ...formValues,
+                          [input.name]: selected.map((select) => {
+                            return select.value;
+                          }),
+                        });
+                      }}
                     />
                   </div>
                 );
@@ -335,9 +426,15 @@ export default function Guests() {
         content={tableContent}
         showViews={false}
         records={tableCount}
-        createClick={() => {
+        createClick={async () => {
+          setSelectedGuests([]);
+          setFormValues({
+            ...formValues,
+            ["guests"]: [],
+          });
           setShowModal(true);
           setEditModal(false);
+          await getGuestsList("");
         }}
         refreshClick={async () => {
           await getAllGroups();
@@ -347,18 +444,18 @@ export default function Guests() {
             p: 1,
             pp: 10,
           });
-          console.log(id);
         }}
-        editAction={(data: any) => {
+        editAction={async (data: any) => {
           openModal(data);
           setId(data["_id"]);
+          await getGrpById(data["_id"]);
+          await getGuestsList("");
         }}
         deleteAction={async (id: string) => {
           setDeleteId(id);
           setShowDeleteModal(true);
         }}
         sendClick={async (columns) => {
-          console.log(columns);
           try {
             // const res = await sendWhatsApp();
             // console.log(res);
@@ -367,7 +464,7 @@ export default function Guests() {
           }
         }}
         deleteClick={(columns) => {
-          console.log(columns);
+          // console.log(columns);
         }}
         viewClick={async (view) => {
           await getAllGroups({

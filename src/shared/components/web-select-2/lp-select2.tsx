@@ -1,6 +1,7 @@
 "use client";
 import stylesSelect2 from "./lp-select2.module.scss";
 import { ChangeEvent, useEffect, useState } from "react";
+import { WebChip } from "@/shared/components/web-chip/WebChip";
 
 interface Option {
   label: string;
@@ -35,7 +36,9 @@ interface Props {
   onBlur?: () => void;
   onFocus?: () => void;
   options: Option[];
+  options_selected: Option[];
   onClickOption: (Option: Option) => void;
+  onClickRecord: (Option: Option) => void;
   showSuggetions: boolean;
 }
 
@@ -59,6 +62,8 @@ export const LpSelect2 = ({
   max,
   options,
   onClickOption,
+  onClickRecord,
+  options_selected,
   showSuggetions,
 }: Props) => {
   // Class
@@ -92,49 +97,69 @@ export const LpSelect2 = ({
   };
 
   return (
-    <div className={stylesSelect2["body"]}>
-      <input
-        id={id}
-        type={type}
-        inputMode={input_mode}
-        name={name}
-        readOnly={disabled}
-        placeholder={placeholder}
-        onChange={onInputChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        className={inputClass}
-        style={styles}
-        value={value}
-        pattern={pattern}
-        min={min}
-        max={max}
-        maxLength={maxLength}
-      />
-      {errorMsg}
-      {showSuggetions && (
-        <ul className={stylesSelect2["options"]}>
-          {options.length ? (
-            options.map((option: any) => {
-              return (
-                <li
-                  key={option.value}
-                  className={stylesSelect2["options__option"]}
-                  onMouseDown={() => {
-                    onClickOption(option);
-                  }}
-                >
-                  {option.label}
-                </li>
-              );
-            })
-          ) : (
-            <li className={stylesSelect2["options__no-option"]}>
-              No options found
-            </li>
-          )}
-        </ul>
-      )}
+    <div>
+      <div className={stylesSelect2["body"]}>
+        <input
+          id={id}
+          type={type}
+          inputMode={input_mode}
+          name={name}
+          readOnly={disabled}
+          placeholder={placeholder}
+          onChange={onInputChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          className={inputClass}
+          style={styles}
+          value={value}
+          pattern={pattern}
+          min={min}
+          max={max}
+          maxLength={maxLength}
+        />
+
+        {errorMsg}
+        {showSuggetions && (
+          <ul className={stylesSelect2["options"]}>
+            {options.length ? (
+              options.map((option: any) => {
+                return (
+                  <li
+                    key={option.value}
+                    className={stylesSelect2["options__option"]}
+                    onMouseDown={() => {
+                      onClickOption(option);
+                    }}
+                  >
+                    {option.label}
+                  </li>
+                );
+              })
+            ) : (
+              <li className={stylesSelect2["options__no-option"]}>
+                No options found
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
+
+      {
+        <div className={stylesSelect2["body__selects-container"]}>
+          {options_selected.map((opt) => (
+            <div key={opt.value} className={stylesSelect2["body__selects"]}>
+              <WebChip
+                text={opt.label}
+                color={"blue"}
+                close={true}
+                onClick={() => {
+                  onClickRecord(opt);
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      }
     </div>
   );
 };
