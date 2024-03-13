@@ -24,6 +24,15 @@ export const getGuests = async (params?: {
   return response.data;
 };
 
+export const getGuestById = async (id: string) => {
+  const response = await serverApi.get("/guests/" + id, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  return response.data;
+};
+
 export const getTotalCount = async (search?: string, filter?: string) => {
   let config: any = search ? { params: { search: search } } : undefined;
 

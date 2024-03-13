@@ -16,6 +16,7 @@ import { validations } from "@/shared/functions/validations";
 import {
   createGuest,
   deleteGuest,
+  getGuestById,
   getGuests,
   getTotalCount,
   updateGuest,
@@ -23,6 +24,7 @@ import {
 import { GuestsColumns } from "@/app/layout/guests/columns.guests";
 import { WebToast } from "@/shared/components/web-toast/WebToast";
 import { useRouter } from "next/navigation";
+import { getGroups } from "@/shared/services/groupsService";
 
 export default function Guests() {
   const [showToast, setShowToast] = useState<boolean>(false);
@@ -42,6 +44,7 @@ export default function Guests() {
   const [tableView, setTableView] = useState<string | undefined>(undefined);
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState("");
@@ -51,6 +54,7 @@ export default function Guests() {
   });
   const [id, setId] = useState("");
   const [validate, setValidate] = useState<any>({ ...input_validations });
+  const [groupOptions, setGroupOptions] = useState<any>([]);
 
   const getAllGuests = async (params?: {
     p: number;
@@ -202,13 +206,61 @@ export default function Guests() {
     }
 
     setEditModal(true);
-    setFormValues(value);
     setShowModal(true);
+  };
+
+  const getGuestData = async (id: string) => {
+    try {
+      const res = await getGuestById(id);
+      if (res) {
+        const data = res.data;
+        setFormValues({
+          first_name: data["first_name"],
+          middle_name: data["middle_name"],
+          last_name: data["last_name"],
+          email_address: data["email_address"],
+          phone_number: data["email_address"],
+          group: data.group ? data.group["value"] : "",
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getGroupsList = async () => {
+    try {
+      const res = await getGroups({
+        p: 1,
+        pp: 50,
+      });
+      if (res) {
+        const data = res.data;
+        setGroupOptions(
+          data.map((datum: any) => {
+            return {
+              label: datum.name,
+              value: datum["_id"],
+            };
+          }),
+        );
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
     getAllGuests();
   }, []);
+
+  useEffect(() => {
+    if (!showModal) {
+      formatForm();
+    }
+  }, [showModal]);
 
   return (
     <>
@@ -227,7 +279,32 @@ export default function Guests() {
                     <label className={styles["form__input--label"]}>
                       {input.label}
                     </label>
-                    <select name={input.name}> {input.label} </select>
+                    <select
+                      name={input.name}
+                      value={formValues[input.name]}
+                      onChange={(event) => {
+                        const text = event.target.value;
+                        setFormValues({ ...formValues, [input.name]: text });
+                        setValidate({
+                          ...validate,
+                          [input.name]: {
+                            ...validations(
+                              { name: input.name, label: input.label },
+                              text,
+                              input_requirements,
+                            ),
+                            completed: !!text,
+                          },
+                        });
+                      }}
+                    >
+                      <option value=""> Assign later </option>
+                      {groupOptions.map((opt: any) => (
+                        <option value={opt.value} key={opt.value}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 );
               } else {
@@ -272,7 +349,7 @@ export default function Guests() {
               }
             })}
 
-            <WebButton type={"submit"} style={"basic"}>
+            <WebButton type={"submit"} style={"basic"} loading={loading}>
               <> {editModal ? "Edit" : "Create"} </>
             </WebButton>
           </form>
@@ -329,9 +406,12 @@ export default function Guests() {
         columns={columns}
         content={tableContent}
         records={tableCount}
-        createClick={() => {
+        createClick={async () => {
           setShowModal(true);
           setEditModal(false);
+          setLoading(true);
+          await getGroupsList();
+          setLoading(false);
         }}
         refreshClick={async () => {
           await getAllGuests();
@@ -342,11 +422,13 @@ export default function Guests() {
             pp: 10,
             filter: id,
           });
-          console.log(id);
         }}
-        editAction={(data: any) => {
-          openModal(data);
+        editAction={async (data: any) => {
+          setLoading(true);
           setId(data["_id"]);
+          openModal(data);
+          await getGroupsList();
+          await getGuestData(data["_id"]);
         }}
         deleteAction={async (id: string) => {
           setDeleteId(id);

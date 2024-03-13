@@ -29,11 +29,11 @@ export const form_inputs = [
     name: "group",
     type: "select",
   },
-  {
-    label: "Table",
-    name: "table",
-    type: "select",
-  },
+  // {
+  //   label: "Table",
+  //   name: "table",
+  //   type: "select",
+  // },
 ];
 
 export const input_requirements: {
@@ -69,10 +69,10 @@ export const input_requirements: {
     min_length: 2,
     required: false,
   },
-  table: {
-    min_length: 2,
-    required: false,
-  },
+  // table: {
+  //   min_length: 2,
+  //   required: false,
+  // },
 };
 
 export const form_values = {
@@ -82,7 +82,7 @@ export const form_values = {
   email_address: "",
   phone_number: "",
   group: "",
-  table: "",
+  // table: "",
 };
 
 export const input_validations = {
@@ -116,9 +116,9 @@ export const input_validations = {
     msg: "",
     completed: true,
   },
-  table: {
-    error: false,
-    msg: "",
-    completed: true,
-  },
+  // table: {
+  //   error: false,
+  //   msg: "",
+  //   completed: true,
+  // },
 };
