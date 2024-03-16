@@ -24,16 +24,16 @@ export const form_inputs = [
     name: "phone_number",
     type: "phone",
   },
-  {
-    label: "Group",
-    name: "group",
-    type: "select",
-  },
   // {
   //   label: "Table",
   //   name: "table",
   //   type: "select",
   // },
+  {
+    label: "Group",
+    name: "group",
+    type: "select",
+  },
 ];
 
 export const input_requirements: {
