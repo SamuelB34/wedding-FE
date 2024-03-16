@@ -41,6 +41,11 @@ export const GuestsColumns: {
     type: "boolean",
   },
   {
+    name: "answer",
+    label: "Answered",
+    type: "boolean",
+  },
+  {
     name: "assist",
     label: "Assist",
     type: "boolean",
