@@ -15,6 +15,7 @@ interface Props {
   viewAction?: (id: string) => void;
   editAction?: (id: any) => void;
   deleteAction?: (id: string) => void;
+  copyAction?: (id: string) => void;
 }
 
 export function WebMobileColumn({
@@ -26,6 +27,7 @@ export function WebMobileColumn({
   viewAction,
   editAction,
   deleteAction,
+  copyAction,
 }: Props) {
   const [open, setOpen] = useState(false);
   const columnContent = useColumnContent();
@@ -196,18 +198,18 @@ export function WebMobileColumn({
                     styles["table__content--table__head--label__actions"]
                   }
                 >
-                  <Image
-                    className={
-                      styles["table__content--table__head--label__actions--img"]
-                    }
-                    src={"/components/table/eye.svg"}
-                    alt={"eye"}
-                    width={30}
-                    height={30}
-                    onClick={() => {
-                      if (viewAction) viewAction(content["_id"]);
-                    }}
-                  />
+                  {/*<Image*/}
+                  {/*  className={*/}
+                  {/*    styles["table__content--table__head--label__actions--img"]*/}
+                  {/*  }*/}
+                  {/*  src={"/components/table/eye.svg"}*/}
+                  {/*  alt={"eye"}*/}
+                  {/*  width={30}*/}
+                  {/*  height={30}*/}
+                  {/*  onClick={() => {*/}
+                  {/*    if (viewAction) viewAction(content["_id"]);*/}
+                  {/*  }}*/}
+                  {/*/>*/}
                   <Image
                     className={
                       styles[
@@ -240,6 +242,22 @@ export function WebMobileColumn({
                     onClick={() => {
                       if (deleteAction && checkActions(content))
                         deleteAction(content["_id"]);
+                    }}
+                  />
+                  <Image
+                    className={
+                      styles[
+                        checkActions(content)
+                          ? "table__content--table__head--label__actions--img"
+                          : "table__content--table__head--label__actions--img-disabled"
+                      ]
+                    }
+                    src={"/components/table/header/link.svg"}
+                    alt={"copy"}
+                    width={30}
+                    height={30}
+                    onClick={() => {
+                      if (copyAction) copyAction(content["_id"]);
                     }}
                   />
                 </div>

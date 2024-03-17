@@ -219,7 +219,7 @@ export default function Guests() {
           middle_name: data["middle_name"],
           last_name: data["last_name"],
           email_address: data["email_address"],
-          phone_number: data["email_address"],
+          phone_number: data["phone_number"],
           group: data.group ? data.group["value"] : "",
         });
       }
@@ -250,6 +250,29 @@ export default function Guests() {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const generateUrl = (id: string) => {
+    const url = process.env.NEXT_PUBLIC_SAVE_THE_DATE_URL;
+    navigator.clipboard
+      .writeText(`${url}${id}`)
+      .then(() => {
+        setToastType("success");
+        setToastMsg("Invitation link copied");
+        setShowToast(true);
+      })
+      .catch((error) => {
+        setToastType("error");
+        setToastMsg("Error generation invitation link");
+        setShowToast(true);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setShowToast(false);
+        }, 3000);
+        setDeleteId("");
+        setShowDeleteModal(false);
+      });
   };
 
   useEffect(() => {
@@ -423,6 +446,9 @@ export default function Guests() {
             filter: id,
           });
         }}
+        copyAction={(id: string) => {
+          generateUrl(id);
+        }}
         editAction={async (data: any) => {
           setLoading(true);
           setId(data["_id"]);
@@ -454,6 +480,7 @@ export default function Guests() {
           });
           setTableView(view);
           setTableP(1);
+          setTableSearch("");
         }}
         searchFunction={async (search) => {
           if (search.length) {

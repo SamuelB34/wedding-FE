@@ -34,6 +34,7 @@ interface Props {
   viewAction?: (id: string) => void;
   editAction?: (content: any) => void;
   deleteAction?: (id: string) => void;
+  copyAction?: (id: string) => void;
   paginationAction?: (page: number) => void;
 }
 
@@ -56,6 +57,7 @@ export function WebTable({
   viewAction,
   editAction,
   deleteAction,
+  copyAction,
   paginationAction,
 }: Props) {
   const columnContent = useColumnContent();
@@ -206,6 +208,8 @@ export function WebTable({
                               column.type,
                               item[column.name] || "",
                               styles,
+                              item["first_name"],
+                              item["_id"],
                             )}
                           </td>
                         ))}
@@ -221,20 +225,20 @@ export function WebTable({
                               ]
                             }
                           >
-                            <Image
-                              className={
-                                styles[
-                                  "table__content--table__head--label__actions--img"
-                                ]
-                              }
-                              src={"/components/table/eye.svg"}
-                              alt={"eye"}
-                              width={24}
-                              height={24}
-                              onClick={() => {
-                                if (viewAction) viewAction(item["_id"]);
-                              }}
-                            />
+                            {/*<Image*/}
+                            {/*  className={*/}
+                            {/*    styles[*/}
+                            {/*      "table__content--table__head--label__actions--img"*/}
+                            {/*    ]*/}
+                            {/*  }*/}
+                            {/*  src={"/components/table/eye.svg"}*/}
+                            {/*  alt={"eye"}*/}
+                            {/*  width={24}*/}
+                            {/*  height={24}*/}
+                            {/*  onClick={() => {*/}
+                            {/*    if (viewAction) viewAction(item["_id"]);*/}
+                            {/*  }}*/}
+                            {/*/>*/}
                             <Image
                               className={
                                 styles[
@@ -267,6 +271,20 @@ export function WebTable({
                               onClick={() => {
                                 if (deleteAction && checkActions(item))
                                   deleteAction(item["_id"]);
+                              }}
+                            />
+                            <Image
+                              className={
+                                styles[
+                                  "table__content--table__head--label__actions--img"
+                                ]
+                              }
+                              src={"/components/table/header/link.svg"}
+                              alt={"copy"}
+                              width={24}
+                              height={24}
+                              onClick={() => {
+                                if (copyAction) copyAction(item["_id"]);
                               }}
                             />
                           </div>
@@ -355,6 +373,9 @@ export function WebTable({
                       }}
                       deleteAction={(id: string) => {
                         if (deleteAction) deleteAction(id);
+                      }}
+                      copyAction={(id: string) => {
+                        if (copyAction) copyAction(id);
                       }}
                     />
                   </div>
