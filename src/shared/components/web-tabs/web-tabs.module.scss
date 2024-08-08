@@ -1,0 +1,42 @@
+@import "src/shared/scss/_variables";
+@import "@/shared/scss/_media-queries.scss";
+
+.tabs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+}
+
+.container_active {
+    font-family: Inter, sans-serif;
+    border-bottom: 2px solid $--primary;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.container_inactive {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.tab_active {
+    color: $--primary;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 2px;
+}
+
+.tab_inactive {
+    color: #000000;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}

@@ -1,6 +1,22 @@
+"use client"
+import { useState } from "react";
 import styles from "./tables.module.scss";
+import { WebTabs } from "@/shared/components/web-tabs/WebTabs";
 
 export default function Tables() {
+  const [tabsList, setTabsList] = useState([
+    {
+      id: 0,
+      label: "List",
+      active: true
+    },
+    {
+      id: 1,
+      label: "Floor Plan",
+      active: false
+    },
+  ])
+
   return <> 
     <div className={styles.frame}>
 
@@ -9,10 +25,33 @@ export default function Tables() {
           <p>10 tables full</p>
       </div>
 
-      <div className={styles.container}>
-          <a href="#">List</a>
-          <a href="#">Floor Plan</a>
-      </div>
+      <WebTabs 
+        tabs={tabsList}
+        onTabClick={(id) => {
+          // Crear copia de la lista de tabs
+          let list_copy = [...tabsList];
+
+          // Recorreme la lista, y pon cada tab con el active negativo
+          list_copy = list_copy.map((tab) => {
+            return {
+              ...tab,
+              active: false
+            }
+          })
+
+          // Encuentrame la posicion en donde el id que viene de onTabClick
+          // sea igual al id en la lista de tabs
+          const index = list_copy.findIndex((tab) =>{
+            return tab.id === id
+          })
+
+          // Cuando lo encuentres, ponle el active como true
+          list_copy[index].active = true
+
+          // Asignale la copia de los tabs, a la variable
+          setTabsList([...list_copy])
+        }}
+      />
 
       <div className={styles.tableContainer}>
         <div className={styles.tableContainerText}>
@@ -45,9 +84,7 @@ export default function Tables() {
       </div>
 
     </div>
-
-    <script src="menu.js"></script>
-  
+      
   </>;
 
 }
