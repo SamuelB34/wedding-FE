@@ -2,6 +2,7 @@
 import { useState } from "react";
 import styles from "./tables.module.scss";
 import { WebTabs } from "@/shared/components/web-tabs/WebTabs";
+import { WebActions } from "@/shared/components/web-actions/WebActions";
 
 export default function Tables() {
   const [tabsList, setTabsList] = useState([
@@ -16,6 +17,24 @@ export default function Tables() {
       active: false
     },
   ])
+
+  const [actionsList, setActionsList] = useState([
+    {
+      id: 2,
+      label: "Update",
+      name: "Update",
+      iconSrc: "pencil icon",
+      active: false
+    },
+    {
+      id: 3,
+      label: "Delete",
+      name: "Delete",
+      iconSrc: "trash icon",
+      active: false,
+    },
+  ])
+  
 
   return <> 
     <div className={styles.frame}>
@@ -56,7 +75,6 @@ export default function Tables() {
       <div className={styles.tableContainer}>
         <div className={styles.tableContainerText}>
           <div>
-            <img src="./icons/table_icon.png"></img>
             <span>Table 1</span>
           </div>
           <p>2 of 10 seats taken</p>
@@ -68,18 +86,48 @@ export default function Tables() {
               <path d="M15 11l-3 3l-3 -3" />
               <path d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0 -18z" />
             </svg>
-          <nav className={styles.menu}>
-          <ul>
-            <li><a href="#">Circulo</a></li>
-            <li><a href="#">Circulitos</a></li>
-          </ul>
-        </nav>
+          
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6E7B70" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
             <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
             <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
           </svg>
+
+
+      <WebActions 
+        actions={actionsList}
+        onActionClick={(id) => {
+          // Crear copia de la lista de tabs
+          let list_copy = [...actionsList];
+
+          // Recorreme la lista, y pon cada tab con el active negativo
+          list_copy = list_copy.map((action) => {
+            return {
+              ...action,
+              active: false
+            }
+          })
+
+          // Encuentrame la posicion en donde el id que viene de onTabClick
+          // sea igual al id en la lista de tabs
+          const index = list_copy.findIndex((action) =>{
+            return action.id === id
+          })
+
+          // Cuando lo encuentres, ponle el active como true
+          list_copy[index].active = true
+
+          // Asignale la copia de los tabs, a la variable
+          setActionsList([...list_copy])
+        }}
+      />
+
+
+
+
+
+
         </div>
       </div>
 
