@@ -1,0 +1,54 @@
+//Container box background
+.actions {
+    width: 179px;
+    height: 86px;
+    padding: 16px;
+    border-radius: 2px 0px 0px 0px;
+    background-color: #FFFFFF;
+    
+}
+
+//container actions 
+.container_active {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Inter, sans-serif;
+    cursor: pointer;
+    color: #6E7B70;
+    gap: 16px;
+
+}
+
+.container_inactive {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Inter, sans-serif;
+    cursor: pointer;
+    color: #6E7B70;
+    gap: 16px;
+}
+
+//Texts active or not
+.actions_active {
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    color: #6E7B70;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.actions_inactive {
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    color: #6E7B70;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+}

@@ -23,20 +23,20 @@ export default function Tables() {
       id: 2,
       label: "Update",
       name: "Update",
-      iconSrc: "pencil icon",
+      iconSrc: "/components/icons/pencil.svg",
       active: false
     },
     {
       id: 3,
       label: "Delete",
       name: "Delete",
-      iconSrc: "trash icon",
+      iconSrc: "/components/icons/trash.svg",
       active: false,
     },
   ])
   
 
-  return <> 
+  return <>
     <div className={styles.frame}>
 
       <div className={styles.Title}>
@@ -81,58 +81,39 @@ export default function Tables() {
         </div>
         <div></div>
         <div className={styles.icons}>
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-chevron-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6E7B70" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-              <path d="M15 11l-3 3l-3 -3" />
-              <path d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0 -18z" />
-            </svg>
-          
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6E7B70" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-            <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-            <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-            <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-          </svg>
+          <img src="/components/icons/chevron.svg" alt="" />
+          <WebActions 
+            actions={actionsList}
+            onActionClick={(id) => {
+              // Crear copia de la lista de tabs
+              let list_copy = [...actionsList];
 
+              // Recorreme la lista, y pon cada tab con el active negativo
+              list_copy = list_copy.map((action) => {
+                return {
+                  ...action,
+                  active: false
+                }
+              })
 
-      <WebActions 
-        actions={actionsList}
-        onActionClick={(id) => {
-          // Crear copia de la lista de tabs
-          let list_copy = [...actionsList];
+              // Encuentrame la posicion en donde el id que viene de onTabClick
+              // sea igual al id en la lista de tabs
+              const index = list_copy.findIndex((action) =>{
+                return action.id === id
+              })
 
-          // Recorreme la lista, y pon cada tab con el active negativo
-          list_copy = list_copy.map((action) => {
-            return {
-              ...action,
-              active: false
-            }
-          })
+              // Cuando lo encuentres, ponle el active como true
+              list_copy[index].active = true
 
-          // Encuentrame la posicion en donde el id que viene de onTabClick
-          // sea igual al id en la lista de tabs
-          const index = list_copy.findIndex((action) =>{
-            return action.id === id
-          })
-
-          // Cuando lo encuentres, ponle el active como true
-          list_copy[index].active = true
-
-          // Asignale la copia de los tabs, a la variable
-          setActionsList([...list_copy])
-        }}
-      />
-
-
-
-
-
-
+              // Asignale la copia de los tabs, a la variable
+              setActionsList([...list_copy])
+            }}
+          />
+          <img src="/components/icons/dots.svg" alt="" />
         </div>
       </div>
-
     </div>
-      
+
   </>;
 
 }

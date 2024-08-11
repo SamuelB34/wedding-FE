@@ -6,7 +6,7 @@ interface Props {
     label: string, 
     name: string, 
     iconSrc: string
-    active: false
+    active: boolean,
     }[]
   onActionClick?: (id: number) => void
 }
@@ -20,7 +20,7 @@ export function WebActions({ actions, onActionClick }: Props) {
           label: string
           name: string
           iconSrc: string
-          active: false
+          active: boolean,
         }) => {
           return (
           <div 
