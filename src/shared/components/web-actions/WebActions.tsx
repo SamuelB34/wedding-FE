@@ -1,14 +1,14 @@
 import styles from "./web-actions.module.scss"
+import Image from 'next/image';
 
 interface Props {
   actions:{
-    id: number,
     label: string, 
     name: string, 
-    iconSrc: string
+    iconSrc: string,
     active: boolean,
     }[]
-  onActionClick?: (id: number) => void
+  onActionClick?: (name: string) => void
 }
 
 export function WebActions({ actions, onActionClick }: Props) {
@@ -16,7 +16,6 @@ export function WebActions({ actions, onActionClick }: Props) {
     <div className={styles.actions}>
       {
         actions.map((action: {
-          id: number
           label: string
           name: string
           iconSrc: string
@@ -24,21 +23,20 @@ export function WebActions({ actions, onActionClick }: Props) {
         }) => {
           return (
           <div 
-           key={action.id} 
+           key={action.name} 
              className={
                 action.active ? 
                 styles.container_active 
               : styles.container_inactive
             }
             onClick={() => {
-              if(onActionClick) onActionClick(action.id)
+              if(onActionClick) onActionClick(action.name)
             }}
-          >
-            <span
-              className={action.active ? styles.action_active : styles.action_inactive}
-            >
-              {action.label}
-            </span>
+          > 
+            <div className={action.active ? styles.action_active : styles.action_inactive}>
+              <span>{action.label} </span>
+              <span>{action.iconSrc}</span>
+            </div>
           </div>
           )
         })

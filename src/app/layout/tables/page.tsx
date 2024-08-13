@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "./tables.module.scss";
 import { WebTabs } from "@/shared/components/web-tabs/WebTabs";
 import { WebActions } from "@/shared/components/web-actions/WebActions";
+import Image from 'next/image';
 
 export default function Tables() {
   const [tabsList, setTabsList] = useState([
@@ -20,17 +21,15 @@ export default function Tables() {
 
   const [actionsList, setActionsList] = useState([
     {
-      id: 2,
       label: "Update",
       name: "Update",
-      iconSrc: "/components/icons/pencil.svg",
+      iconSrc: <Image src={"/components/icons/pencil.svg"} alt={"pencil"} width={16} height={16} />,
       active: false
     },
     {
-      id: 3,
       label: "Delete",
       name: "Delete",
-      iconSrc: "/components/icons/trash.svg",
+      iconSrc: <Image src={"/components/icons/trash.svg"} alt={"trash"} width={16} height={16} />,
       active: false,
     },
   ])
@@ -84,7 +83,7 @@ export default function Tables() {
           <img src="/components/icons/chevron.svg" alt="" />
           <WebActions 
             actions={actionsList}
-            onActionClick={(id) => {
+            onActionClick={(name) => {
               // Crear copia de la lista de tabs
               let list_copy = [...actionsList];
 
@@ -99,7 +98,7 @@ export default function Tables() {
               // Encuentrame la posicion en donde el id que viene de onTabClick
               // sea igual al id en la lista de tabs
               const index = list_copy.findIndex((action) =>{
-                return action.id === id
+                return action.name === name
               })
 
               // Cuando lo encuentres, ponle el active como true
