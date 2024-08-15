@@ -7,7 +7,6 @@
     background-color: #FFFFFF;
     display: grid;
     grid-template-rows: repeat(2, 1fr);
-    justify-items: center;
     align-items: center;
 }
 
@@ -18,9 +17,10 @@
     cursor: pointer;
     color: #6E7B70;
     gap: 16px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-items: start;
 }
     
 
@@ -30,9 +30,10 @@
     cursor: pointer;
     color: #6E7B70;
     gap: 16px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-items: start;
 }
     // &:hover{
     //     background-color:#6E7B70;
