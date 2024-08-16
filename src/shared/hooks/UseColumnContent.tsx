@@ -64,7 +64,7 @@ const useColumnContent = () => {
         return (
           <span className={styles["table__content--table__body--row__value"]}>
             <a
-              href={`https://api.whatsapp.com/send?phone=${value}&text=Hola%20${full_name}!%0A%0A¡En%20el%20link%20encontrarás%20la%20fecha%20de%20nuestra%20boda!.%20%0A%0A${process.env.NEXT_PUBLIC_SAVE_THE_DATE_URL}${id}%0A%0AABRELO%20Y%20CONFIRMA%20TU%20ASISTENCIA!%0A%20%0ANos%20ayudaría%20mucho%20si%20respondes%20antes%20del%2020%20de%20abril%20en%20el%20enlace%0A%0AEspero%20puedas%20acompañarnos.%20NO%20NIÑOS,%20VESTIMENTA%20COLOR%20NEGRO%20%0A%0AAtte.%20Samuel%20y%20Melissa`}
+              href={`https://api.whatsapp.com/send?phone=${value}&text=Hola%20${full_name}!%0A%0A¡En%20el%20link%20encontrarás%20los%20detalles%20de%20nuestra%20boda!.%20%0A%0A${process.env.NEXT_PUBLIC_SAVE_THE_DATE_URL}${id}%0A%0ADentro%20de%20este,%20podrás%20encontrar%20tu%20recepción.%20%0ACualquier%20duda%20o%20pregunta%20estamos%20al%20pendiente%20%3AD%20%0A%0ANOS%20VEMOS%20PRONTO!%0A%0AAtte.%20Samuel%20y%20Melissa`}
               target={"_blank"}
             >
               {phoneFormat(value.toString())}
