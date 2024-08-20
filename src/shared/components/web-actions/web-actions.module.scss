@@ -3,10 +3,10 @@
     width: 179px;
     height: 86px;
     padding: 16px;
-    border-radius: 2px 0px 0px 0px;
+    border-radius: 2px;
     background-color: #FFFFFF;
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -17,10 +17,6 @@
     cursor: pointer;
     color: #6E7B70;
     gap: 16px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    justify-items: start;
 }
     
 
@@ -30,10 +26,6 @@
     cursor: pointer;
     color: #6E7B70;
     gap: 16px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    justify-items: start;
 }
     // &:hover{
     //     background-color:#6E7B70;
@@ -55,3 +47,12 @@
     gap: 16px;
 }
 
+.left {
+    display: flex;
+    align-items: flex-end;
+}
+
+.right {
+    display: flex;
+    align-items: flex-end;
+}

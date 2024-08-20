@@ -33,8 +33,8 @@ export function WebActions({ actions, onActionClick }: Props) {
             }}
           > 
             <div className={action.active ? styles.action_active : styles.action_inactive}>
-            {action.label} 
-            {action.iconSrc}
+            <div className={styles.left}>{action.label}</div>
+            <div className={styles.right}>{action.iconSrc}</div>
             </div>
           </div>
           )

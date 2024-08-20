@@ -1,6 +1,8 @@
 "use client";
 import { WebTables } from "@/shared/components/web-tables/WebTables";
 import { WebGuest } from "@/shared/components/web-guest/WebGuest";
+import { WebActions } from "@/shared/components/web-actions/WebActions";
+
 
 export default function Tables() {
   const guestLis = [
