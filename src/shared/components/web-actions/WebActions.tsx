@@ -1,4 +1,5 @@
 import styles from "./web-actions.module.scss"
+import Image from "next/image"
 
 interface Props {
   actions:{
@@ -35,7 +36,7 @@ export function WebActions({ actions, onActionClick }: Props) {
             <div className={action.active ? styles.action_active : styles.action_inactive}>
             <div className={styles.container_display}>
               <span>{action.label}</span>
-              <span>{action.iconSrc}</span>
+              <Image src={action.iconSrc} alt="action" width={12} height={13} />
             </div>
             
             </div>

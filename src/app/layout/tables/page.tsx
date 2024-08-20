@@ -31,29 +31,24 @@ export default function Tables() {
     {
       label: "Update",
       name: "Update",
-      iconSrc: <img src="/components/icons/pencil.svg" alt="" />,
+      iconSrc: "/components/icons/pencil.svg",
       active: false,
     },
     {
       label: "Delete",
       name: "Delete",
-      iconSrc: <img src="/components/icons/trash.svg" alt="" />,
+      iconSrc: "/components/icons/trash.svg",
       active: false,
     }
   ];
   return (
     <>
-      {actionsList.map((action) => {
-        return (
           <WebActions
-            key={action.name}
             actions={actionsList}
             onActionClick={(name) => {
               console.log(name);
             }}
           />
-        );
-      })}
 
       <WebTables records={10} loading={false} />
 
