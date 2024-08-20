@@ -15,26 +15,29 @@ export function WebActions({ actions, onActionClick }: Props) {
     <div className={styles.actions}>
       {
         actions.map((action: {
-          label: string
-          name: string
-          iconSrc: string
+          label: string,
+          name: string,
+          iconSrc: string,
           active: boolean,
         }) => {
           return (
           <div 
            key={action.name} 
              className={
-                action.active ? 
-                styles.container_active 
-              : styles.container_inactive
+               action.active ? 
+               styles.container_active :
+               styles.container_inactive
             }
             onClick={() => {
               if(onActionClick) onActionClick(action.name)
             }}
           > 
             <div className={action.active ? styles.action_active : styles.action_inactive}>
-            <div className={styles.left}>{action.label}</div>
-            <div className={styles.right}>{action.iconSrc}</div>
+            <div className={styles.container_display}>
+              <span>{action.label}</span>
+              <span>{action.iconSrc}</span>
+            </div>
+            
             </div>
           </div>
           )

@@ -1,13 +1,16 @@
 //Container box background
 .actions {
     width: 179px;
-    height: 86px;
+    height: 54px;
     padding: 16px;
+    gap: 16px;
     border-radius: 2px;
-    background-color: #FFFFFF;
+    border:1px solid #dfdfdfff;
+    background-color: rgba(255, 255, 255, 1);
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    // align-content: center;
 }
 
 //container actions 
@@ -16,7 +19,6 @@
     font-family: Inter, sans-serif;
     cursor: pointer;
     color: #6E7B70;
-    gap: 16px;
 }
     
 
@@ -24,35 +26,29 @@
     width: 100%;
     font-family: Inter, sans-serif;
     cursor: pointer;
-    color: #6E7B70;
-    gap: 16px;
+    color: #6E7B70;    
+    
+    &:hover{
+        border-bottom:1px solid #6E7B70;
+        transition: 0.25s ease;
+    }
 }
-    // &:hover{
-    //     background-color:#6E7B70;
-    //     color: #FFFFFF;
-    //     transition: 0.25s ease;
-    // }
+
 
 
 //Texts active or not
 .actions_active {
-    font-size: 16px;
     font-weight: 500;
-    gap: 16px;
+    color: #6E7B70;
 }
 
 .actions_inactive {
-    font-size: 16px;
     font-weight: 500;
-    gap: 16px;
+    color: #6E7B70;
 }
 
-.left {
+.container_display {
     display: flex;
-    align-items: flex-end;
+    justify-content: space-between;
 }
 
-.right {
-    display: flex;
-    align-items: flex-end;
-}
