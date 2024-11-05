@@ -11,6 +11,11 @@ export const GroupsColumns: {
     type: "text",
   },
   {
+    name: "count",
+    label: "Count",
+    type: "text",
+  },
+  {
     name: "guests",
     label: "Guests",
     type: "array-2",
