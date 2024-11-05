@@ -35,6 +35,7 @@ interface Props {
   editAction?: (content: any) => void;
   deleteAction?: (id: string) => void;
   copyAction?: (id: string) => void;
+  sortAction?: (id: string) => void;
   paginationAction?: (page: number) => void;
 }
 
@@ -58,6 +59,7 @@ export function WebTable({
   editAction,
   deleteAction,
   copyAction,
+  sortAction,
   paginationAction,
 }: Props) {
   const columnContent = useColumnContent();
@@ -142,6 +144,9 @@ export function WebTable({
                     <th
                       className={styles["table__content--table__head--label"]}
                       key={column.name}
+                      onClick={() => {
+                        if (sortAction) sortAction(column.name);
+                      }}
                     >
                       {column.label}
                     </th>

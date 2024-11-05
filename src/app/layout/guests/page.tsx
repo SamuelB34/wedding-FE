@@ -42,6 +42,8 @@ export default function Guests() {
   const [tableContent, setTableContent] = useState<any[]>([]);
   const [tableSearch, setTableSearch] = useState<string>("");
   const [tableView, setTableView] = useState<string | undefined>(undefined);
+  const [tableSortBy, setTableSortBy] = useState("created_by");
+  const [tableSortDir, setTableSortDir] = useState("asc");
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -61,6 +63,8 @@ export default function Guests() {
     pp: number;
     search?: string;
     filter?: string;
+    sort_by?: string;
+    sort_order?: string;
   }) => {
     if (params && params.search?.length) {
       setTableLoadingNoHeader(true);
@@ -285,6 +289,10 @@ export default function Guests() {
     }
   }, [showModal]);
 
+  useEffect(() => {
+    console.log(tableSortDir);
+  }, [tableSortDir]);
+
   return (
     <>
       {showModal && (
@@ -497,11 +505,26 @@ export default function Guests() {
             setTableSearch("");
           }
         }}
+        sortAction={async (column) => {
+          await getAllGuests({
+            p: 1,
+            pp: 10,
+            search: tableSearch.length ? tableSearch : undefined,
+            sort_by: column,
+            sort_order: tableSortDir === "asc" ? "desc" : "asc",
+            filter: tableView,
+          });
+          setTableSortBy(column);
+          setTableSortDir(tableSortDir === "asc" ? "desc" : "asc");
+        }}
         paginationAction={async (page: number) => {
+          console.log(tableSortDir);
           await getAllGuests({
             p: page,
             pp: 10,
             search: tableSearch.length ? tableSearch : undefined,
+            sort_by: tableSortBy,
+            sort_order: tableSortDir,
             filter: tableView,
           });
           setTableP(page);

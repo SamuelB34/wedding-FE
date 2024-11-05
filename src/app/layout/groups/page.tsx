@@ -45,6 +45,8 @@ export default function Guests() {
   const [tableP, setTableP] = useState(1);
   const [tableContent, setTableContent] = useState<any[]>([]);
   const [tableSearch, setTableSearch] = useState<string>("");
+  const [tableSortBy, setTableSortBy] = useState("created_by");
+  const [tableSortDir, setTableSortDir] = useState("asc");
   const [tableView, setTableView] = useState<string | undefined>(undefined);
   const router = useRouter();
 
@@ -70,6 +72,8 @@ export default function Guests() {
     p: number;
     pp: number;
     search?: string;
+    sort_by?: string;
+    sort_order?: string;
   }) => {
     if (params && params.search?.length) {
       setTableLoadingNoHeader(true);
@@ -120,7 +124,11 @@ export default function Guests() {
           ...formValues,
           ["guest"]: [],
         });
-        await getAllGroups();
+        await getAllGroups({
+          p: tableP,
+          pp: 10,
+          search: tableSearch.length ? tableSearch : undefined,
+        });
       }
     } catch (e: any) {
       const error = e.response.data.error;
@@ -150,7 +158,11 @@ export default function Guests() {
           ...formValues,
           ["guest"]: [],
         });
-        await getAllGroups();
+        await getAllGroups({
+          p: tableP,
+          pp: 10,
+          search: tableSearch.length ? tableSearch : undefined,
+        });
       }
     } catch (e: any) {
       const error = e.response.data.error;
@@ -186,7 +198,11 @@ export default function Guests() {
         setToastType("success");
         setToastMsg("Group deleted success");
         setShowToast(true);
-        await getAllGroups();
+        await getAllGroups({
+          p: tableP,
+          pp: 10,
+          search: tableSearch.length ? tableSearch : undefined,
+        });
       }
     } catch (e: any) {
       const error = e.response.data.error;
@@ -487,6 +503,16 @@ export default function Guests() {
             await getAllGroups();
             setTableSearch("");
           }
+        }}
+        sortAction={async (column) => {
+          await getAllGroups({
+            p: 1,
+            pp: 10,
+            search: tableSearch.length ? tableSearch : undefined,
+            sort_by: column,
+            sort_order: tableSortDir,
+          });
+          setTableSortDir(tableSortDir === "asc" ? "desc" : "asc");
         }}
         paginationAction={async (page: number) => {
           await getAllGroups({
