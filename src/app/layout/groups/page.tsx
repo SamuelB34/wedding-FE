@@ -510,15 +510,18 @@ export default function Guests() {
             pp: 10,
             search: tableSearch.length ? tableSearch : undefined,
             sort_by: column,
-            sort_order: tableSortDir,
+            sort_order: tableSortDir === "asc" ? "desc" : "asc",
           });
           setTableSortDir(tableSortDir === "asc" ? "desc" : "asc");
+          setTableSortBy(column);
         }}
         paginationAction={async (page: number) => {
           await getAllGroups({
             p: page,
             pp: 10,
             search: tableSearch.length ? tableSearch : undefined,
+            sort_by: tableSortBy,
+            sort_order: tableSortDir,
           });
           setTableP(page);
         }}

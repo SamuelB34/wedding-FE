@@ -34,6 +34,7 @@ interface Props {
   viewAction?: (id: string) => void;
   editAction?: (content: any) => void;
   deleteAction?: (id: string) => void;
+  downloadClick?: () => void;
   copyAction?: (id: string) => void;
   sortAction?: (id: string) => void;
   paginationAction?: (page: number) => void;
@@ -51,6 +52,7 @@ export function WebTable({
   content,
   sendClick,
   deleteClick,
+  downloadClick,
   refreshClick,
   createClick,
   viewClick,
@@ -114,6 +116,9 @@ export function WebTable({
             showViews={showViews}
             loading={loadingNoHeader ? false : loading}
             columnsSelected={columnsSelected}
+            downloadClick={() => {
+              if (downloadClick) downloadClick();
+            }}
             deleteClick={() => {
               if (deleteClick) deleteClick(columnsSelected);
             }}

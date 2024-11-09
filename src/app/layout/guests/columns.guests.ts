@@ -23,7 +23,7 @@ export const GuestsColumns: {
   {
     name: "table",
     label: "Table",
-    type: "array",
+    type: "text",
   },
   {
     name: "group",

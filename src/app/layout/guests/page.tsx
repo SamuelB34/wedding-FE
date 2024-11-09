@@ -16,6 +16,7 @@ import { validations } from "@/shared/functions/validations";
 import {
   createGuest,
   deleteGuest,
+  exportList,
   getGuestById,
   getGuests,
   getTotalCount,
@@ -42,7 +43,7 @@ export default function Guests() {
   const [tableContent, setTableContent] = useState<any[]>([]);
   const [tableSearch, setTableSearch] = useState<string>("");
   const [tableView, setTableView] = useState<string | undefined>(undefined);
-  const [tableSortBy, setTableSortBy] = useState("created_by");
+  const [tableSortBy, setTableSortBy] = useState<string | undefined>(undefined);
   const [tableSortDir, setTableSortDir] = useState("asc");
   const router = useRouter();
 
@@ -66,6 +67,7 @@ export default function Guests() {
     sort_by?: string;
     sort_order?: string;
   }) => {
+    console.log(params);
     if (params && params.search?.length) {
       setTableLoadingNoHeader(true);
       setTableLoading(true);
@@ -506,6 +508,7 @@ export default function Guests() {
           }
         }}
         sortAction={async (column) => {
+          console.log(column);
           await getAllGuests({
             p: 1,
             pp: 10,
@@ -518,7 +521,6 @@ export default function Guests() {
           setTableSortDir(tableSortDir === "asc" ? "desc" : "asc");
         }}
         paginationAction={async (page: number) => {
-          console.log(tableSortDir);
           await getAllGuests({
             p: page,
             pp: 10,
@@ -528,6 +530,9 @@ export default function Guests() {
             filter: tableView,
           });
           setTableP(page);
+        }}
+        downloadClick={async () => {
+          await exportList();
         }}
       />
     </>

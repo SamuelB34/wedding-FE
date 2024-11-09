@@ -17,6 +17,7 @@ interface Props {
   sendClick?: () => void;
   deleteClick?: () => void;
   refreshClick?: () => void;
+  downloadClick?: () => void;
   createClick?: () => void;
   selectAll?: () => void;
   viewClick?: (view: string) => void;
@@ -31,6 +32,7 @@ export function WebTableHeader({
   sendClick,
   deleteClick,
   refreshClick,
+  downloadClick,
   createClick,
   viewClick,
   columnsSelected,
@@ -106,6 +108,19 @@ export function WebTableHeader({
                   className={styles["header__top--refresh__img"]}
                   src={"/components/table/refresh.svg"}
                   alt={"refresh"}
+                  width="16"
+                  height="16"
+                />
+              </div>
+
+              <div
+                className={styles["header__top--refresh"]}
+                onClick={downloadClick}
+              >
+                <Image
+                  className={styles["header__top--refresh__download"]}
+                  src={"/components/tables/download.svg"}
+                  alt={"download"}
                   width="16"
                   height="16"
                 />

@@ -3,7 +3,8 @@ import { WebTables } from "@/shared/components/web-tables/WebTables";
 import { WebGuest } from "@/shared/components/web-guest/WebGuest";
 import { WebActions } from "@/shared/components/web-actions/WebActions";
 import Image from "next/image";
-
+import { useEffect } from "react";
+import { getGroups } from "@/shared/services/tablesService";
 
 export default function Tables() {
   const guestLis = [
@@ -26,7 +27,7 @@ export default function Tables() {
       table_name: null,
     },
   ];
-  
+
   const actionsList = [
     {
       label: "Update",
@@ -39,16 +40,26 @@ export default function Tables() {
       name: "Delete",
       iconSrc: "/components/icons/trash.svg",
       active: false,
-    }
+    },
   ];
+
+  const getAllTables = async () => {
+    const res = await getGroups();
+    console.log(res);
+  };
+
+  useEffect(() => {
+    getAllTables();
+  }, []);
+
   return (
     <>
-          <WebActions
-            actions={actionsList}
-            onActionClick={(name) => {
-              console.log(name);
-            }}
-          />
+      <WebActions
+        actions={actionsList}
+        onActionClick={(name) => {
+          console.log(name);
+        }}
+      />
 
       <WebTables records={10} loading={false} />
 

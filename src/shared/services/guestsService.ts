@@ -110,6 +110,28 @@ export const deleteGuest = async (id: string) => {
   return response.data;
 };
 
+export const exportList = async () => {
+  try {
+    const response = await serverApi.get("/guests/export", {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+      responseType: "blob",
+    });
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "guests.csv"; // Nombre del archivo
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url); // Limpiar la URL generada
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 // export const sendWhatsApp = async () => {
 //   const response = await serverApi.post("/guests/send", undefined, {
 //     headers: {
